@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html ng-app="flaskApp">
+<head>
+	<meta charset="UTF-8">
+	<title>FLASK App with Angular</title>
+	
+	<script src="static/js/lib/angular/angular.min.js"></script>
+    <script src="static/js/lib/angular/angular-route.min.js"/></script>
+    
+    <script src="static/js/appController.js"></script>
+    <script src="static/js/homeController.js"></script>
+    <script src="static/js/metarController.js"></script>
+    <script src="static/js/services.js"></script>
+    <script src="static/js/routing.js"></script>
+       
+</head>
+
+<body>
+
+	<div ng-controller="AppController as app">
+		<div ng-view></div>
+	</div>
+	<br />
+	<div id="footer">
+		&copy; Copyright 2014 by cteisd @ SITO.
+	</div>
+</body>
+</html>
