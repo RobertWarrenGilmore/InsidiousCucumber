@@ -1,0 +1,5 @@
+#Exclude config file from github
+/app/database/mongo-conf.cfg
+
+#Exclude python classfiles
+/app/database/*.pyc
