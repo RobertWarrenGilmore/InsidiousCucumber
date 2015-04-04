@@ -12,5 +12,5 @@ app.controller('AppController', function() {
 
 	var self = this;
 
-	self.user = {fname:'Wayne', lname:'Starr'}
+	self.user = {fname:'Wayne', lname:'Starr', professor:true}
 });
