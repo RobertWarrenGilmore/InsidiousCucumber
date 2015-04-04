@@ -18,6 +18,7 @@ Create a virtual environment with the following command:
 Note: you may need to run with administrative priviledges
 
 Run the newly created virtual environment
+
 Windows:
 
     venv\scripts\activate
@@ -36,6 +37,7 @@ Install All dependencies by running:
 Runn the virtual environment with the instructions above
 
 Run the manage.py file using python
+
     python manage.py
 
 
