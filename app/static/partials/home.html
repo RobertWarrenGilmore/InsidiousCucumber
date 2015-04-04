@@ -14,7 +14,9 @@
 		<!-- Existing Projects -->
 		<div class="col-sm-6 col-xs-12 text-center panel panel-default hover" 
 				ng-click="homeCtrl.gotoProject(project.id);" ng-repeat="project in course.projects">
-			<a style="float:right" ng-if="app.user.professor">Remove</a>
+			<a style="float:right" ng-if="app.user.professor" ng-click="homeCtrl.removeProject(course, project)">
+				Remove
+			</a>
 			<h4 class="text-left">{{project.name}}</h4><hr>
 			<p class="text-left compressed"><b>Notifications</b></p>
 			<p class="compressed" ng-repeat="notification in project.notifications | limitTo:2" 
@@ -27,18 +29,25 @@
 			<p class="compressed" ng-if="project.notifications.length < 2">
 				&nbsp;
 			</p>
-			<p class="text-left compressed"><b>Assigned Team</b></p>
-			<p class="compressed">{{project.team}}</p><hr><br>
+			<p class="text-left compressed" ng-if="!app.user.professor"><b>Assigned Team</b></p>
+			<p class="compressed" ng-if="!app.user.professor">{{project.team}}</p>
+			<p class="text-left compressed" ng-if="app.user.professor"><b>Number of Teams</b></p>
+			<p class="compressed" ng-if="app.user.professor && project.numteams > 0">
+				{{project.numteams}}
+			</p>
+			<p class="compressed" ng-if="app.user.professor && project.numteams == 0">
+				No Teams Created
+			</p><hr><br>
 		</div>
 		<!-- Add a new project -->
 		<div class="col-sm-6 col-xs-12 text-center panel panel-default hover" 
 				ng-if="course.addProject">
-			<h4 class="text-left"><input type="text"/></h4>
+			<h4 class="text-left"><input ng-model="course.addProjectName" type="text"/></h4>
 			<hr>
 			<p class="text-left compressed"><b>Description</b></p>
-			<input style="width:100%;height:67px;" type="area"/>
+			<input style="width:100%;height:67px;" type="area" ng-model="course.addProjectDesc"/>
 			<hr>
-			<button style="float:right" class="button" ng-if="app.user.professor">
+			<button style="float:right" ng-click="homeCtrl.addProject(course)" ng-if="app.user.professor">
 				Submit
 			</button>
 			<button style="float:right" ng-click="course.addProject=false" ng-if="app.user.professor">
