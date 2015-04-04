@@ -25,6 +25,8 @@
 	<p class="compressed" ng-if="app.user.professor && projectCtrl.project.numteams == 0">
 		No Teams Created
 	</p><hr>
+	<p class="text-left compressed"><b>Project Website</b></p>
+	<p><a href="{{projectCtrl.project.url}}">{{projectCtrl.project.name}}</a></p><hr>
 </div>
 <div class="col-xs-12 col-sm-6 col-md-9">
 	<button class="btn btn-lg" style="margin-bottom:5px" ng-if="app.user.professor">Manage Teams</button>
