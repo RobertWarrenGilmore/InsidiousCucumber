@@ -6,20 +6,28 @@ Insidious Cuccumber
 Install the pip package for python 2.7 https://pip.pypa.io/en/latest/installing.html.
 
 Install the virtualenv package with the following command:
+
     pip install virtualenv
+
 Note: you may need to run with administrative priviledges
 
 Create a virtual environment with the following command:
+
     virtualenv venv
+
 Note: you may need to run with administrative priviledges
 
 Run the newly created virtual environment
 Windows:
+
     venv\scripts\activate
+
 Linux, OSX:
+
     . venv/bin/activate
 
 Install All dependencies by running:
+
     pip install -r requirements
 
 
