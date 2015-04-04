@@ -2,7 +2,7 @@
  * 
  */
 
-var app = angular.module('flaskApp');
+var app = angular.module('minerva');
 
 app.controller('HomeController', function($http){
 	

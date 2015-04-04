@@ -2,7 +2,7 @@
  * 
  */
 
-var app = angular.module('flaskApp');
+var app = angular.module('minerva');
 
 /*PROVIDES URL ROUTING FOR THE APP*/
 app.config(function ($routeProvider) {

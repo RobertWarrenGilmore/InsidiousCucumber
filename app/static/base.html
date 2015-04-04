@@ -1,28 +1,46 @@
 <!DOCTYPE html>
-<html ng-app="flaskApp">
+<html ng-app="minerva">
 <head>
 	<meta charset="UTF-8">
-	<title>FLASK App with Angular</title>
-	
+	<title>Minerva</title>
+
 	<script src="static/js/lib/angular/angular.min.js"></script>
-    <script src="static/js/lib/angular/angular-route.min.js"/></script>
+	<script src="static/js/lib/angular/angular-route.min.js"/></script>
+
+	<link rel="stylesheet" type="text/css" href="static/css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="static/css/main.css" />
+	<script src="static/js/lib/bootstrap/ui-bootstrap-tpls-0.11.2.min.js"></script>
     
-    <script src="static/js/appController.js"></script>
-    <script src="static/js/homeController.js"></script>
-    <script src="static/js/metarController.js"></script>
-    <script src="static/js/services.js"></script>
-    <script src="static/js/routing.js"></script>
-       
+	<script src="static/js/appController.js"></script>
+	<script src="static/js/homeController.js"></script>
+	<script src="static/js/metarController.js"></script>
+	<script src="static/js/services.js"></script>
+	<script src="static/js/routing.js"></script>  
 </head>
 
 <body>
-
 	<div ng-controller="AppController as app">
-		<div ng-view></div>
-	</div>
-	<br />
-	<div id="footer">
-		&copy; Copyright 2015 by Insidious Cuccumber.
+		<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+				<a class="navbar-brand" href="#">
+					<span>
+						<image src="static/images/rit.png"/>
+						&nbsp;
+						<image src="static/images/logo_sm.png"/>
+					</span>
+				</a>
+				</div>
+				<p class="navbar-text navbar-right">Logged in as {{app.user.fname + ' ' + app.user.lname}}</p>
+			</div>
+		</nav>
+		<div class="container" ng-view></div>
+		<br>
+		<footer class="footer">
+      		<div class="container">
+        		<p class="text-muted">&copy; Copyright 2015 Insidious Cuccumber Inc.</p>
+      		</div>
+    	</footer>
 	</div>
 </body>
 </html>
