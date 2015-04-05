@@ -4,7 +4,7 @@ import ConfigParser
 #DB Setup
 __client = None
 __db = None
-cfg = open('./mongo-conf.cfg','r')
+cfg = open('./app/database/mongo-conf.cfg','r')
 cfg_parser = ConfigParser.RawConfigParser()
 cfg_parser.readfp(cfg)
 __client = pymongo.MongoClient(cfg_parser.get('mongo-client','connection-string'))

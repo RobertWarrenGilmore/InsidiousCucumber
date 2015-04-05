@@ -191,7 +191,7 @@ class Assignment():
 class Deliverable(Assignment):
 	assigned_team = None
 	
-	def __init__(self,id,class_id,due,description,team)
+	def __init__(self,id,class_id,due,description,team):
 		self.id = id
 		self.class_id = class_id
 		self.due = due
@@ -209,7 +209,7 @@ class Deliverable(Assignment):
 class Task(Assignment):
 	assigned_user = None
 	
-	def __init__(self,id,class_id,due,description,user)
+	def __init__(self,id,class_id,due,description,user):
 		self.id = id
 		self.class_id = class_id
 		self.due = due
