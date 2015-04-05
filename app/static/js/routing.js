@@ -14,5 +14,9 @@ app.config(function ($routeProvider) {
 		templateUrl: 'static/partials/project.html',
 		controller: 'ProjectController',
 		controllerAs: 'projectCtrl'
+	}).when('/deliverables', {
+		templateUrl: 'static/partials/deliverables.html',
+		controller: 'DeliverablesController',
+		controllerAs: 'deliverablesCtrl'
 	}).otherwise({ redirectTo: '/' });
 });

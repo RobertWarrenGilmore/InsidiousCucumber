@@ -4,7 +4,7 @@
  * be on each page such as user information.
  */
 
-var app = angular.module('minerva', ['ngRoute', 'ui.bootstrap']);
+var app = angular.module('minerva', ['ngRoute', 'ui.bootstrap', 'ui.calendar']);
 
 /*GLOBAL CONTROLLER*/
 app.controller('AppController', function() {
