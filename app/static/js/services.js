@@ -3,7 +3,7 @@
  * http://www.bennadel.com/blog/2616-aborting-ajax-requests-using-http-and-angularjs.htm
  */
 
-var app = angular.module('flaskApp');
+var app = angular.module('minerva');
 
 app.factory('metarService', function($http, $q){
 	

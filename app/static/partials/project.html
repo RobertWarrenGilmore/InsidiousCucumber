@@ -1,0 +1,38 @@
+<button ng-if="app.user.professor && !projectCtrl.edit" ng-click="projectCtrl.edit = true" class="btn" 
+	style="float:right;margin-top:20px;">Edit</button>
+<button ng-if="app.user.professor && projectCtrl.edit" ng-click="projectCtrl.edit = false" class="btn" 
+	style="float:right;margin-top:20px;">Save</button>
+<h2 ng-if="!projectCtrl.edit">{{projectCtrl.project.name}}</h2>
+<h2 ng-if="projectCtrl.edit"><input type="text" ng-model="projectCtrl.project.name"/></h2>
+<p ng-if="!projectCtrl.edit">{{projectCtrl.project.description}}</p>
+<textarea ng-if="projectCtrl.edit" style="width:100%;height:67px;" type="area" 
+	ng-model="projectCtrl.project.description"></textarea><hr>
+<div class="col-xs-12 col-sm-6 col-md-3">
+	<p class="text-left compressed"><b>Notifications</b></p>
+	<p class="compressed" ng-repeat="notification in projectCtrl.project.notifications">
+		{{notification}}
+	</p>
+	<p class="compressed" ng-if="projectCtrl.project.notifications.length == 0">
+		No Notifications
+	</p>
+	<hr>
+	<p class="text-left compressed" ng-if="!app.user.professor"><b>Assigned Team</b></p>
+	<p class="compressed" ng-if="!app.user.professor">{{projectCtrl.project.team}}</p>
+	<p class="text-left compressed" ng-if="app.user.professor"><b>Number of Teams</b></p>
+	<p class="compressed" ng-if="app.user.professor && projectCtrl.project.numteams > 0">
+		{{projectCtrl.project.numteams}}
+	</p>
+	<p class="compressed" ng-if="app.user.professor && projectCtrl.project.numteams == 0">
+		No Teams Created
+	</p><hr>
+	<p class="text-left compressed"><b>Project Website</b></p>
+	<p><a href="{{projectCtrl.project.url}}">{{projectCtrl.project.name}}</a></p><hr>
+</div>
+<div class="col-xs-12 col-sm-6 col-md-9">
+	<button class="btn btn-lg" style="margin-bottom:5px" ng-if="app.user.professor">Manage Teams</button>
+	<button class="btn btn-lg" style="margin-bottom:5px" ng-if="app.user.professor">Manage Deliverables</button>
+	<button class="btn btn-lg" style="margin-bottom:5px" ng-if="!app.user.professor">Manage Tasks</button>
+	<button class="btn btn-lg" style="margin-bottom:5px" ng-if="!app.user.professor">Schedule Meetings</button>
+	<button class="btn btn-lg" style="margin-bottom:5px" ng-if="!app.user.professor">Message Team</button>
+	<button class="btn btn-lg" style="margin-bottom:5px" ng-if="!app.user.professor">View Delivarables</button>
+</div>

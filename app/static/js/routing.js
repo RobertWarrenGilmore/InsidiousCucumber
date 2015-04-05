@@ -2,7 +2,7 @@
  * 
  */
 
-var app = angular.module('flaskApp');
+var app = angular.module('minerva');
 
 /*PROVIDES URL ROUTING FOR THE APP*/
 app.config(function ($routeProvider) {
@@ -10,11 +10,9 @@ app.config(function ($routeProvider) {
 		templateUrl: 'static/partials/home.html',
 		controller: 'HomeController',
 		controllerAs: 'homeCtrl'
-	}).when('/metar', {
-		templateUrl: 'static/partials/metar.html',
-		controller: 'MetarController',
-		controllerAs: 'metarCtrl'
-	}).when('/metar/Results', {
-		templateUrl: 'static/partials/metarResults.html',
+	}).when('/project', {
+		templateUrl: 'static/partials/project.html',
+		controller: 'ProjectController',
+		controllerAs: 'projectCtrl'
 	}).otherwise({ redirectTo: '/' });
 });

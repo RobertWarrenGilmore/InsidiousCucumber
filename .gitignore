@@ -3,3 +3,6 @@
 
 #Exclude python classfiles
 /app/database/*.pyc
+
+#Exclude venv files
+/venv
