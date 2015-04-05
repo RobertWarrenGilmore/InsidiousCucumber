@@ -1,6 +1,7 @@
 import pymongo
 import ConfigParser
 
+#DB Setup
 __client = None
 __db = None
 cfg = open('./mongo-conf.cfg','r')
@@ -21,6 +22,12 @@ def get_from(coll,id):
 	query['id']=id
 	object = collection.find_one(query)
 	return object
+	
+def delete_from(coll,id):
+	collection = __db[coll]
+	query = {}
+	query['id']=id
+	collection.remove(query)
 	
 def update(coll,query,new_document):
 	collection = __db[coll]
