@@ -4,13 +4,20 @@
  * be on each page such as user information.
  */
 
+/*global angular*/
+'use strict';
+
 var app = angular.module('minerva', ['ngRoute', 'ui.bootstrap', 'ui.calendar']);
 
 /*GLOBAL CONTROLLER*/
-app.controller('AppController', function() {
-	console.log("Creating App Controller");
+app.controller('AppController', function () {
+	console.log('Creating App Controller');
 
 	var self = this;
 
-	self.user = {fname:'Wayne', lname:'Starr', professor:true}
+	self.user = {
+		fname: 'Wayne',
+		lname: 'Starr',
+		professor: false
+	};
 });

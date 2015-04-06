@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html ng-app="minerva">
+
 <head>
 	<meta charset="UTF-8">
 	<title>Minerva</title>
 
 	<script src="static/js/lib/angular/angular.min.js"></script>
-	<script src="static/js/lib/angular/angular-route.min.js"/></script>
+	<script src="static/js/lib/angular/angular-route.min.js" /></script>
 
 	<link rel="stylesheet" type="text/css" href="static/css/bootstrap.css" />
 	<link rel="stylesheet" type="text/css" href="static/css/fullcalendar.css" />
@@ -22,13 +23,13 @@
 	<script src="static/js/lib/fullcalendar/gcal.js"></script>
 	<script src="static/js/lib/fullcalendar/lang-all.js"></script>
 	<script src="static/js/lib/fullcalendar/calendar.js"></script>
-    
+
 	<script src="static/js/appController.js"></script>
 	<script src="static/js/homeController.js"></script>
 	<script src="static/js/projectController.js"></script>
 	<script src="static/js/deliverablesController.js"></script>
 	<script src="static/js/services.js"></script>
-	<script src="static/js/routing.js"></script>  
+	<script src="static/js/routing.js"></script>
 </head>
 
 <body>
@@ -36,13 +37,12 @@
 		<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
 			<div class="container">
 				<div class="navbar-header">
-				<a class="navbar-brand" href="#">
-					<span>
-						<image src="static/images/rit.png"/>
-						&nbsp;
-						<image src="static/images/logo_sm.png"/>
-					</span>
-				</a>
+					<a class="navbar-brand" href="#">
+						<span>
+							<image src="static/images/rit.png" /> &nbsp;
+							<image src="static/images/logo_sm.png" />
+						</span>
+					</a>
 				</div>
 				<p class="navbar-text navbar-right">Logged in as {{app.user.fname + ' ' + app.user.lname}}</p>
 			</div>
@@ -50,15 +50,16 @@
 		<div class="container container-white" ng-view></div>
 		<br>
 		<footer class="footer">
-      		<div class="container">
-        		<p class="text-muted" style="float:left">
+			<div class="container">
+				<p class="text-muted" style="float:left">
 					&copy; Copyright 2015 Insidious Cuccumber Inc.
 				</p>
 				<p class="text-muted hidden-sm hidden-xs" style="float:right">
-					Ask your professor if Minerva is right for you.  Minerva does not mitigate project "risks."
-				<p>
-      		</div>
-    	</footer>
+					Ask your professor if Minerva is right for you. Minerva does not mitigate project "risks."
+					<p>
+			</div>
+		</footer>
 	</div>
 </body>
+
 </html>

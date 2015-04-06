@@ -1,6 +1,9 @@
 /**
- * 
+ *
  */
+
+/*global angular*/
+'use strict';
 
 var app = angular.module('minerva');
 
@@ -18,5 +21,7 @@ app.config(function ($routeProvider) {
 		templateUrl: 'static/partials/deliverables.html',
 		controller: 'DeliverablesController',
 		controllerAs: 'deliverablesCtrl'
-	}).otherwise({ redirectTo: '/' });
+	}).otherwise({
+		redirectTo: '/'
+	});
 });
