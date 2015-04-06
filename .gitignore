@@ -1,8 +1,11 @@
-#Exclude config file from github
+# Exclude config file from github
 /app/database/mongo-conf.cfg
 
-#Exclude python classfiles
-/app/database/*.pyc
+# Exclude python classfiles
+*.pyc
 
-#Exclude venv files
+# Exclude venv files
 /venv
+
+# Exclude the flask log
+/logs/flask.log
