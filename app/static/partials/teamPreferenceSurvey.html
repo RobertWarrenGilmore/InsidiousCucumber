@@ -1,0 +1,21 @@
+<h2>
+	{{surveyCtrl.project.name}}
+</h2>
+<p>
+	Select which classmates you would and wouldn't like to work with.
+</p>
+<hr>
+<div id="survey">
+	<div ng-repeat="classmate in surveyCtrl.classmates" class="survey-classmate col-xs-12 col-sm-6 col-md-3">
+		<span class="name">
+			{{classmate.name}}
+		</span>
+		<div class="preferences pull-right">
+			<input type="radio" value="prefer_{{$index}}" name="preference_{{$index}}" />
+			<input type="radio" value="no_preference_{{$index}}" name="preference_{{$index}}" ng-checked="true" />
+			<input type="radio" value="avoid_{{$index}}" name="preference_{{$index}}" />
+		</div>
+	</div>
+</div>
+<button ng-if="app.user.professor && !projectCtrl.edit" ng-click="projectCtrl.edit = true" class="btn" style="float:right;margin-top:20px;">Edit</button>
+<button ng-if="app.user.professor && projectCtrl.edit" ng-click="projectCtrl.edit = false" class="btn" style="float:right;margin-top:20px;">Save</button>

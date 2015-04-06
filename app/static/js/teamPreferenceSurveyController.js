@@ -13,6 +13,10 @@ app.controller('TeamPreferenceSurveyController', function ($http, metarService, 
 	var self = this;
 	self.loaded = false;
 
+	self.project = {
+		name: 'Main Project'
+	};
+
 	self.classmates = [{
 		name: 'Robert Gilmore'
 	}, {
@@ -21,5 +25,37 @@ app.controller('TeamPreferenceSurveyController', function ($http, metarService, 
 		name: 'Ryan Bega'
 	}, {
 		name: 'Christopher Enoch'
+	}, {
+		name: 'Petunia Jones'
+	}, {
+		name: 'Ben Schiller'
+	}, {
+		name: 'Phil Cook'
+	}, {
+		name: 'Ringo Starr'
+	}, {
+		name: 'Master Chief'
+	}, {
+		name: 'Sanic'
+	}, {
+		name: 'Phillip J. Fry'
+	}, {
+		name: 'Georgia Lass'
+	}, {
+		name: 'Victor Frankenstein'
+	}, {
+		name: 'Nathan Explosion'
+	}, {
+		name: 'Arturo Sandoval'
+	}, {
+		name: 'Marie Curie'
+	}, {
+		name: 'Mel Brooks'
+	}, {
+		name: 'Barbara Streisand'
+	}, {
+		name: 'Marissa Tomei'
+	}, {
+		name: 'Kristen Schaal'
 	}];
 });
