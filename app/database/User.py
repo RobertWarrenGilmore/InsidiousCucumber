@@ -43,10 +43,11 @@ class Student(User):
     @staticmethod  
     def get_student(id):
         student_map = mongo_client.get_from('students',id)
-        student_object = Student(student_map['id'],student_map['name'],student_map['email'],student_map['team_id'])
-        student_object.task_ids = student_map['task_ids']
-        student_object.message_ids = student_map['message_ids']
-        return student_object
+        if student_map != None:
+            student_object = Student(student_map['id'],student_map['name'],student_map['email'],student_map['team_id'])
+            student_object.task_ids = student_map['task_ids']
+            student_object.message_ids = student_map['message_ids']
+            return student_object
 
 
 class Instructor(User):
