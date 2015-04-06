@@ -12,8 +12,6 @@ app.controller('HomeController', function ($http, $location) {
 	console.log('Created Home Controller');
 
 	var self = this;
-	self.loaded = false;
-	self.mode = null;
 
 	self.courses = [{
 		'name': 'Eng of Enterprise SW Systems',
@@ -46,19 +44,6 @@ app.controller('HomeController', function ($http, $location) {
 		}]
 	}];
 
-	self.init = function () {
-		console.log('Making HTTP Request');
-		$http({
-			method: 'GET',
-			url: '/angularUpdate'
-		}).success(function (data) {
-			console.log(data);
-			self.mode = data.mode;
-			self.searchUrl = data.classSearch;
-			self.loaded = true;
-		});
-	};
-
 	self.gotoProject = function (id) {
 		$location.search('id', id);
 		$location.path('/project');
@@ -85,6 +70,4 @@ app.controller('HomeController', function ($http, $location) {
 			}
 		}
 	};
-
-	self.init();
 });
