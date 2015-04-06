@@ -24,7 +24,7 @@ class Student(User):
         self.id = id
         self.name = name
         self.email = email
-        self.team_id = id
+        self.team_id = team_id
         self.task_ids = []
         self.message_ids = []
         self.save()
