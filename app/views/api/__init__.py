@@ -6,19 +6,9 @@ from flask import Flask, request, Blueprint, current_app, \
 from flask.json import jsonify
 
 
-mod = Blueprint('METAR', __name__)
+mod = Blueprint('api', __name__)
 
-@mod.route('/')
-def index():
-    if request.args.get('code') != None:
-        current_app.logger.DEBUG("Returned an error code")
-        
-    return make_response(open('flaskSandbox/static/base.html').read())
-
-
-#This calls the function when the /METAR/(a variable) is called. 
-#For Example, /METAR/KROC will pass stationInfo=KROC into the function
-@mod.route('/search', methods=['GET', 'POST'])
+@mod.route('/user', methods=['GET'])
 def search():
 
     print("Getting Metar for: " + request.args.get('station'))
