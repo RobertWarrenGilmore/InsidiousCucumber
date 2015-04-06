@@ -15,6 +15,7 @@ class User:
     def to_hashmap(self):
         return self.__dict__
 
+
 class Student(User):
     team_id = None
     task_ids = None
