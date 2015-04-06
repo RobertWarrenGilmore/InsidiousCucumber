@@ -1,48 +1,56 @@
 {
-  "env": {
-    "browser": true
-  },
-  "rules": {
-    // Warn on double quotes.
-    "quotes": [1, "single"],
+	"env": {
+		"browser": true
+	},
+	"rules": {
+		// Warn on double quotes.
+		"quotes": [1, "single"],
 
-    // Warn on trailing spaces.
-    "no-trailing-spaces": 1,
+		// Warn on trailing spaces.
+		"no-trailing-spaces": 1,
 
-    // Warn on dangling commas.
-    "no-comma-dangle": 1,
+		// Warn on dangling commas.
+		"no-comma-dangle": 1,
 
-    // Warn on incorrect brace style.
-    "brace-style": [1, "1tbs"],
+		// Warn on incorrect brace style.
+		"brace-style": [1, "1tbs"],
 
-    // Error on missing "use strict" statements in the global scope.
-    "strict": [2, "global"],
+		// Error on missing use strict statements in the global scope.
+		"strict": [2, "global"],
 
-    // Do nothing on dangling underscores. They're fine.
-    "no-underscore-dangle": 0,
+		// Do nothing on dangling underscores. They're fine.
+		"no-underscore-dangle": 0,
 
-    // Error on global variable.
-    "no-undef": 2,
+		// Error on global variable.
+		"no-undef": 2,
 
-    // Warn on variable shadowing.
-    "no-shadow": 1,
+		// Warn on variable shadowing.
+		"no-shadow": 1,
 
-    // Warn on unused variable.
-    "no-unused-vars": 1,
+		// Warn on unused variable.
+		"no-unused-vars": 1,
 
-    // Warn on double spacing.
-    "no-multi-spaces": 1,
+		// Warn on double spacing.
+		"no-multi-spaces": 1,
 
-    // Warn on weird spacing in objects.
-    "key-spacing" : 1,
+		// Warn on weird spacing in objects.
+		"key-spacing": 1,
 
-    // Warn on bad indentation.
-    "indent": [1, 2],
+		// Warn on bad indentation.
+		"indent": [1, "tab", {
+			"indentSwitchCase": true
+		}],
 
-    // Warn on cyclomatic complexity above six in a function.
-    "complexity": [1, 6],
+		// Warn on cyclomatic complexity above six in a function.
+		"complexity": [1, 6],
 
-    // Warn on bad JSDocs.
-    "valid-jsdoc": 1
-  }
+		// Warn on bad JSDocs.
+		"valid-jsdoc": 1,
+
+		// Do nothing on console logs.
+		"no-console": 0,
+
+		// Do nothing when this deprecated error is triggered.
+		"global-strict": 0
+	}
 }
