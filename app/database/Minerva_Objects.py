@@ -164,3 +164,115 @@ class TeamMessage(BasicMessage):
 		
 	def save(self):
 		mongo_client.update('messages',{'id': self.id},self.to_hashmap())
+		
+class Assignment():
+	id = None
+	class_id = None
+	due = None
+	description = None
+	
+	def __init__(self,id,class_id,due,description):
+		self.id = id
+		self.class_id = class_id
+		self.due = due
+		self.description = description
+		
+	def to_hashmap(self):
+		map = {}
+		map['id'] = self.id
+		map['class_id'] = self.class_id
+		map['due'] = self.due
+		map['description'] = self.description
+		return map
+		
+	def save(self):
+		mongo_client.update('assignments',{'id': self.id},self.to_hashmap())
+		
+class Deliverable(Assignment):
+	assigned_team = None
+	
+	def __init__(self,id,class_id,due,description,team):
+		self.id = id
+		self.class_id = class_id
+		self.due = due
+		self.description = description
+		self.assigned_team = team
+		
+	def to_hashmap(self):
+		map = super(Assignment, self).to_hashmap()
+		map['assigned_team'] = self.assigned_team
+		return map
+	
+	def save(self):
+		mongo_client.update('assignments',{'id': self.id},self.to_hashmap())
+		
+class Task(Assignment):
+	assigned_user = None
+	
+	def __init__(self,id,class_id,due,description,user):
+		self.id = id
+		self.class_id = class_id
+		self.due = due
+		self.description = description
+		self.assigned_user = user
+		
+	def to_hashmap(self):
+		map = super(Assignment, self).to_hashmap()
+		map['assigned_user'] = self.assigned_user
+		return map
+	
+	def save(self):
+		mongo_client.update('assignments',{'id': self.id},self.to_hashmap())
+		
+class Class():
+	id = None
+	name = None
+	assign_id = None
+	instruct_id = None
+	
+	def __init__(self,id,name):
+		self.id = id
+		self.name = name
+		assign_id = []
+		instruct_id = []
+		
+	def to_hashmap(self):
+		map = {}
+		map['id'] = self.id
+		map['name'] = self.name
+		map['assign_id'] = self.assign_id
+		map['instruct_id'] = self.instruct_id
+		return map
+	
+	def save(self):
+		mongo_clientupdate('classes',{'id': self.id},self.to_hashmap())
+		
+class Instructor():
+	id = None
+	uid = None
+	class_id = None
+	name = None
+	email = None
+	
+	def __init__(self,id,uid,name,email):
+		self.id = id
+		self.uid = uid
+		self.name = name
+		self.email = email
+		self.class_id = []
+		
+	def add_class(self,class_id):
+		self.class_id += [class_id]
+		
+	def to_hashmap(self):
+		map = {}
+		map['id'] = self.id
+		map['uid'] = self.uid
+		map['class_id'] = self.class_id
+		map['name'] = self.name
+		map['email'] = self.email
+		map['class_id'] = self.class_id
+		return map
+		
+	def save(self):
+		mongo_clientupdate('instructors',{'id': self.id},self.to_hashmap())

@@ -4,7 +4,7 @@
 
 var app = angular.module('minerva');
 
-app.controller('ProjectController', function($http, metarService, $routeParams){
+app.controller('ProjectController', function($http, metarService, $routeParams, $location){
 	console.log("Started ProjectController");
 	
 	var self = this;
@@ -38,6 +38,11 @@ app.controller('ProjectController', function($http, metarService, $routeParams){
 		if (self.projects[i].id == $routeParams.id) {
 			self.project = self.projects[i];
 		}
+	}
+
+	self.gotoDeliverables = function() {
+		$location.search('id', self.project.id);
+		$location.path('/deliverables');
 	}
 	
 	var promise = null;
