@@ -1,7 +1,7 @@
 '''
 Created on Apr 6, 2015
 
-@author: chris
+@author: chris, Randy
 '''
 
 import mongo_client
