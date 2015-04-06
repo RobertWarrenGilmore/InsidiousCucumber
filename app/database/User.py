@@ -21,11 +21,11 @@ class Student(User):
     task_ids = None
     message_ids = None
         
-    def __init__(self,id,name,email,team_id):
+    def __init__(self,id,name,email):
         self.id = id
         self.name = name
         self.email = email
-        self.team_id = team_id
+        self.team_ids = []
         self.task_ids = []
         self.message_ids = []
         self.save()
@@ -45,10 +45,11 @@ class Student(User):
     def get_student(id):
         student_map = mongo_client.get_from('students',id)
         if student_map != None:
-            student_object = Student(student_map['id'],student_map['name'],student_map['email'],student_map['team_id'])
-            student_object.task_ids = student_map['task_ids']
-            student_object.message_ids = student_map['message_ids']
-            return student_object
+			student_object = Student(student_map['id'],student_map['name'],student_map['email'])
+			student_object.team_ids = student_map['team_ids']
+			student_object.task_ids = student_map['task_ids']
+			student_object.message_ids = student_map['message_ids']
+			return student_object
 
 
 class Instructor(User):
