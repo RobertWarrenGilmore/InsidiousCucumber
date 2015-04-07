@@ -65,6 +65,10 @@ app.controller('ProjectController', function ($http, metarService, $routeParams,
 		$location.path('/deliverables');
 	};
 
+	self.gotoTeamPreferenceSurvey = function () {
+		$location.path('/teamPreferenceSurvey');
+	};
+
 	var promise = null;
 
 	self.abortRequest = function () {

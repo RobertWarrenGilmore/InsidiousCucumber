@@ -1,0 +1,61 @@
+<h2>
+	Team Preference Survey - {{surveyCtrl.project.name}}
+</h2>
+<p>
+	Select which classmates you would and wouldn't like to have on your team for this project.
+</p>
+<hr>
+<div id="survey">
+	<div class="header bg-primary col-xs-12 col-sm-4 col-md-3">
+		<span class="name">
+			Name
+		</span>
+		<div class="preferences pull-right">
+			<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+			<span class="glyphicon glyphicon-unchecked invisible" aria-hidden="true"></span>
+			<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+		</div>
+	</div>
+	<div class="header bg-primary col-sm-4 col-md-3 visible-sm visible-md visible-lg">
+		<span class="name">
+			Name
+		</span>
+		<div class="preferences pull-right">
+			<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+			<span class="glyphicon glyphicon-unchecked invisible" aria-hidden="true"></span>
+			<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+		</div>
+	</div>
+	<div class="header bg-primary col-sm-4 col-md-3 visible-sm visible-md visible-lg">
+		<span class="name">
+			Name
+		</span>
+		<div class="preferences pull-right">
+			<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+			<span class="glyphicon glyphicon-unchecked invisible" aria-hidden="true"></span>
+			<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+		</div>
+	</div>
+	<div class="header bg-primary col-md-3 visible-md visible-lg">
+		<span class="name">
+			Name
+		</span>
+		<div class="preferences pull-right">
+			<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+			<span class="glyphicon glyphicon-unchecked invisible" aria-hidden="true"></span>
+			<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+		</div>
+	</div>
+	<div ng-repeat="classmate in surveyCtrl.classmates" class="survey-classmate col-xs-12 col-sm-4 col-md-3">
+		<span class="name">
+			{{classmate.name}}
+		</span>
+		<div class="preferences pull-right">
+			<input type="radio" value="prefer" name="preference_{{$index}}" ng-model="classmate.preference" />
+			<input type="radio" value="no_preference" name="preference_{{$index}}" ng-model="classmate.preference" />
+			<input type="radio" value="avoid" name="preference_{{$index}}" ng-model="classmate.preference" />
+		</div>
+	</div>
+</div>
+
+<button class="btn" style="float:right;margin-top:20px;">Save</button>
