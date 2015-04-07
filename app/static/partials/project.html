@@ -33,8 +33,9 @@
 <div class="col-xs-12 col-sm-6 col-md-9">
 	<button class="btn btn-lg" style="margin-bottom:5px" ng-if="app.user.professor">Manage Teams</button>
 	<button class="btn btn-lg" style="margin-bottom:5px" ng-click="projectCtrl.gotoDeliverables()" ng-if="app.user.professor">Manage Deliverables</button>
+	<button class="btn btn-lg" style="margin-bottom:5px" ng-click="projectCtrl.gotoTeamPreferenceSurvey()" ng-if="!app.user.professor">Specify Team Preferences</button>
 	<button class="btn btn-lg" style="margin-bottom:5px" ng-if="!app.user.professor">Manage Tasks</button>
 	<button class="btn btn-lg" style="margin-bottom:5px" ng-if="!app.user.professor">Schedule Meetings</button>
 	<button class="btn btn-lg" style="margin-bottom:5px" ng-if="!app.user.professor">Message Team</button>
-	<button class="btn btn-lg" style="margin-bottom:5px" ng-click="projectCtrl.gotoDeliverables()" ng-if="!app.user.professor">View Delivarables</button>
+	<button class="btn btn-lg" style="margin-bottom:5px" ng-click="projectCtrl.gotoDeliverables()" ng-if="!app.user.professor">View Deliverables</button>
 </div>

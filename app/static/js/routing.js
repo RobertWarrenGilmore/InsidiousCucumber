@@ -25,6 +25,10 @@ app.config(function ($routeProvider) {
 		templateUrl: 'static/partials/deliverables.html',
 		controller: 'DeliverablesController',
 		controllerAs: 'deliverablesCtrl'
+	}).when('/teamPreferenceSurvey', {
+		templateUrl: 'static/partials/teamPreferenceSurvey.html',
+		controller: 'TeamPreferenceSurveyController',
+		controllerAs: 'surveyCtrl'
 	}).otherwise({
 		redirectTo: '/'
 	});
