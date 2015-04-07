@@ -22,7 +22,21 @@ def get_from(coll,id):
 	query['id']=id
 	item = collection.find_one(query)
 	return item
-	
+
+def get_from_attr(coll, val):
+	collection = __db[coll]
+	query = {}
+	query['name']=val
+	item = collection.find_one(query)
+	return item
+
+def get_list_from(coll,iid):
+	collection = __db[coll]
+	query = {}
+	query['id']=iid
+	item = collection.find_one(query)
+	return item
+
 def delete_from(coll,id):
 	collection = __db[coll]
 	query = {}
