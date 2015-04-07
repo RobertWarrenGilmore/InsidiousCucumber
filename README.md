@@ -32,13 +32,21 @@ Install All dependencies by running:
     pip install -r requirements
 
 
+#Development
+
+To run a shell from the application, run:
+
+	python manage.py shell
+	
+Watch the magic happen!
+
 #Running
 
-Runn the virtual environment with the instructions above
+Run the virtual environment with the instructions above
 
-Run the manage.py file using python
+Run the manage.py file using python:
 
-    python manage.py
+    python manage.py runserver
 
 
 #Modules Packaged in Requirements

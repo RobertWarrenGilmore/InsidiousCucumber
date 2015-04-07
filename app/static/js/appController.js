@@ -15,9 +15,5 @@ app.controller('AppController', function () {
 
 	var self = this;
 
-	self.user = {
-		fname: 'Wayne',
-		lname: 'Starr',
-		professor: false
-	};
+	self.user = {};
 });

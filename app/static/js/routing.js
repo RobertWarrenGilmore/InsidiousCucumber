@@ -10,6 +10,10 @@ var app = angular.module('minerva');
 /*PROVIDES URL ROUTING FOR THE APP*/
 app.config(function ($routeProvider) {
 	$routeProvider.when('/', {
+		templateUrl: 'static/partials/login.html',
+		controller: 'LoginController',
+		controllerAs: 'loginCtrl'
+	}).when('/home', {
 		templateUrl: 'static/partials/home.html',
 		controller: 'HomeController',
 		controllerAs: 'homeCtrl'

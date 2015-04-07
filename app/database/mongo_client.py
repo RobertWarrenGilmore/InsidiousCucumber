@@ -11,17 +11,17 @@ __client = pymongo.MongoClient(cfg_parser.get('mongo-client','connection-string'
 __db = __client[cfg_parser.get('mongo-client','db-name')]
 cfg.close()
 
-def insert_to(coll,object):
+def insert_to(coll,item):
 	collection = __db[coll]
-	object_id = collection.insert(object).__str__()
-	return object_id
+	item_id = collection.insert(item).__str__()
+	return item_id
 	
 def get_from(coll,id):
 	collection = __db[coll]
 	query = {}
 	query['id']=id
-	object = collection.find_one(query)
-	return object
+	item = collection.find_one(query)
+	return item
 	
 def delete_from(coll,id):
 	collection = __db[coll]

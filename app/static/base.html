@@ -25,6 +25,7 @@
 	<script src="static/js/lib/fullcalendar/calendar.js"></script>
 
 	<script src="static/js/appController.js"></script>
+	<script src="static/js/loginController.js"></script>
 	<script src="static/js/homeController.js"></script>
 	<script src="static/js/projectController.js"></script>
 	<script src="static/js/deliverablesController.js"></script>
@@ -45,7 +46,7 @@
 						</span>
 					</a>
 				</div>
-				<p class="navbar-text navbar-right">Logged in as {{app.user.fname + ' ' + app.user.lname}}</p>
+				<p class="navbar-text navbar-right" ng-if="app.user.id != null">Logged in as {{app.user.fname + ' ' + app.user.lname}}</p>
 			</div>
 		</nav>
 		<div class="container container-white" ng-view></div>
