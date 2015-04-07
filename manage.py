@@ -10,7 +10,6 @@ from app import minerva
 
 from flask_script import Manager, Shell, Server
 
-
 manager = Manager(minerva)
 
 #Used to make variables availabe to the shell if needed

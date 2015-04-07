@@ -1,21 +1,28 @@
 from flask import Flask, g
-
+from flask_restful import Api
 
 #create the app
 minerva = Flask(__name__)
 
+#add the API
+api = Api(minerva)
+
 #Configure the app using a class found in settings.py
 minerva.config.from_object('app.settings.DevConfig')
 
-logger = minerva.config['LOGGER']
+logger = minerva.config['APP_LOGGER']
 logger.info("Logger created")
 
+# Push the current application context to allow for current_app to be used
+app_ctx = minerva.app_context()
+app_ctx.push()
+    
 #Register all of the blueprints
-
 from views import home
-from app.views import api
 minerva.register_blueprint(home.mod)
-minerva.register_blueprint(api.mod, url_prefix='/metar')
+
+from app.views.api.gateway import Login
+api.add_resource(Login, '/login')
 
 @minerva.before_request
 def config_g():
