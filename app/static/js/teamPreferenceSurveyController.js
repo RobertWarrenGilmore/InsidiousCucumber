@@ -18,44 +18,64 @@ app.controller('TeamPreferenceSurveyController', function ($http, metarService, 
 	};
 
 	self.classmates = [{
-		name: 'Robert Gilmore'
+		name: 'Robert Gilmore',
+		preference: 'no_preference'
 	}, {
-		name: 'Randy Goodman'
+		name: 'Randy Goodman',
+		preference: 'no_preference'
 	}, {
-		name: 'Ryan Bega'
+		name: 'Ryan Bega',
+		preference: 'no_preference'
 	}, {
-		name: 'Christopher Enoch'
+		name: 'Christopher Enoch',
+		preference: 'no_preference'
 	}, {
-		name: 'Petunia Jones'
+		name: 'Petunia Jones',
+		preference: 'no_preference'
 	}, {
-		name: 'Ben Schiller'
+		name: 'Ben Schiller',
+		preference: 'no_preference'
 	}, {
-		name: 'Phil Cook'
+		name: 'Phil Cook',
+		preference: 'no_preference'
 	}, {
-		name: 'Ringo Starr'
+		name: 'Ringo Starr',
+		preference: 'no_preference'
 	}, {
-		name: 'Master Chief'
+		name: 'Master Chief',
+		preference: 'no_preference'
 	}, {
-		name: 'Sanic'
+		name: 'Sanic',
+		preference: 'no_preference'
 	}, {
-		name: 'Phillip J. Fry'
+		name: 'Phillip J. Fry',
+		preference: 'no_preference'
 	}, {
-		name: 'Georgia Lass'
+		name: 'Georgia Lass',
+		preference: 'no_preference'
 	}, {
-		name: 'Victor Frankenstein'
+		name: 'Victor Frankenstein',
+		preference: 'no_preference'
 	}, {
-		name: 'Nathan Explosion'
+		name: 'Nathan Explosion',
+		preference: 'no_preference'
 	}, {
-		name: 'Arturo Sandoval'
+		name: 'Arturo Sandoval',
+		preference: 'no_preference'
 	}, {
-		name: 'Marie Curie'
+		name: 'Marie Curie',
+		preference: 'no_preference'
 	}, {
-		name: 'Mel Brooks'
+		name: 'Mel Brooks',
+		preference: 'no_preference'
 	}, {
-		name: 'Barbara Streisand'
+		name: 'Barbara Streisand',
+		preference: 'no_preference'
 	}, {
-		name: 'Marissa Tomei'
+		name: 'Marissa Tomei',
+		preference: 'no_preference'
 	}, {
-		name: 'Kristen Schaal'
+		name: 'Kristen Schaal',
+		preference: 'no_preference'
 	}];
 });
