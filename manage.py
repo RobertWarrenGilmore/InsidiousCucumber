@@ -14,7 +14,9 @@ manager = Manager(minerva)
 
 #Used to make variables availabe to the shell if needed
 def make_context():
-    pass
+    from app import database
+    
+    return dict(db=database)
 
 manager.add_command('runserver', Server())
 manager.add_command('shell', Shell(make_context=make_context))
