@@ -4,7 +4,8 @@ Created on Apr 6, 2015
 @author: chris, Randy
 '''
 
-import mongo_client
+from app.database import mongo_client
+
 
 class Course():
     

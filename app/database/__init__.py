@@ -1,1 +1,1 @@
-import User, Course, Assignment, Message, Team
+from app.database import models
