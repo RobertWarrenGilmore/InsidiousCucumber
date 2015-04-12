@@ -3,12 +3,14 @@
 
 import unittest
 import fudge
+
 from pymongo.collection import Collection
 from pymongo.results import InsertOneResult
 
 from app.database.models import Student
 from app.database.mappers import UserMapper
 from app.database.mappers.userMapper import StudentMapper
+
 
 class TestSanity(unittest.TestCase):
 	def test_sanity(self):
@@ -29,11 +31,10 @@ class TestUserMapperMethods(unittest.TestCase):
 
 		self.assertEqual(StudentMapper.get_collection(), Collection)
 		
-	@fudge.patch('app.database.mappers.userMapper.UserMapper.get_collection')
-	def test_collection_count(self, FakeUserMapperCollection):
-		FakeUserMapperCollection.is_callable().returns_fake().expects('count')
+	@fudge.patch('app.database.mappers.userMapper.mongo_client')
+	def test_collection_count(self, FakeDB):
+		FakeDB.has_attr(db={'users': fudge.Fake().expects('count')})
 		UserMapper.get_count()
-		fudge.verify()
 
 	def test_to_hashmap(self):
 		userMapper = UserMapper()
@@ -41,7 +42,9 @@ class TestUserMapperMethods(unittest.TestCase):
 		userMap = userMapper.to_hashmap()
 
 		self.assertIsInstance(userMap, dict, 'Dictionary Not Returned')
-		self.assertEqual(userMap, {'test': 'test_value'}, 'Dictionary Not Returned with test value')
+		self.assertEqual(userMap, 
+						{'test': 'test_value'}, 
+						'Dictionary Not Returned with test value')
 
 
 class TestStudentMapperMethods(unittest.TestCase):
@@ -52,42 +55,58 @@ class TestStudentMapperMethods(unittest.TestCase):
 	def tearDown(self):
 		unittest.TestCase.tearDown(self)
 	
-	@fudge.patch('app.database.mappers.userMapper.UserMapper.get_collection')
-	def test_get_student_valid_query(self, FakeGetCollection):
-		FakeGetCollection.is_callable().returns_fake().expects('find_one').with_arg_count(1).returns({'uid': 'test', 'name': 'test', 'email': 'test@test.com'})
-		student = StudentMapper.get({'args': 1})
-		fudge.verify()
+	@fudge.patch('app.database.mappers.userMapper.UserMapper')
+	def test_get_student_valid_query(self, FakeUserMapper):
+		(FakeUserMapper.provides('get_collection')
+						  .returns_fake()
+						  .expects('find_one')
+						  .with_args({'args': 1})
+						  .returns({'uid': 'test', 
+									'name': 'test',
+									'email': 'test@test.com'
+									}))
 		
-		self.assertIsInstance(student, Student, 'Student Not Returned')
-	
-	@fudge.patch('app.database.mappers.userMapper.UserMapper.get_collection')
-	def test_get_student_invalid_query(self, FakeGetCollection):
-		FakeGetCollection.is_callable().returns_fake().expects('find_one').with_arg_count(1).returns(None)
-		student = StudentMapper.get({'args': 1})
-		fudge.verify()
+		student = StudentMapper.get(query_dict={'args': 1})
 		
-		self.assertIsInstance(student, None, 'Something other than None was returned')
+		self.assertIsInstance(student, dict, 'Dictionary Not Returned')
 	
-	@fudge.patch('app.database.mappers.userMapper.UserMapper.get_collection')
-	def test_insert_student(self, FakeGetCollection):
-		FakeGetCollection.is_callable().returns_fake().expects('insert_one').with_arg_count(1).returns(InsertOneResult)
-		new_stu = StudentMapper.insert(self, {'id': 1})
-		fudge.verify()
+	@fudge.patch('app.database.mappers.userMapper.UserMapper')
+	def test_get_student_invalid_query(self, FakeUserMapper):
+		(FakeUserMapper.provides('get_collection')
+					   .returns_fake()
+					   .expects('find_one')
+					   .with_args({'args': 1})
+					   .returns(None))
+		
+		student = StudentMapper.get({'args': 1})
+		
+		self.assertEquals(student, None, 'Something other than None was returned')
+	
+	@fudge.patch('app.database.mappers.userMapper.UserMapper')
+	def test_insert_student(self, FakeUserMapper):
+		(FakeUserMapper.provides('get_collection')
+					   .returns_fake()
+					   .expects('insert_one')
+					   .with_args({'args': 1})
+					   .returns(InsertOneResult))
+		
+		new_stu = StudentMapper.insert({'id': 1})
 		
 		self.assertIsInstance(new_stu, InsertOneResult, "An InsertOneResult was not returned")
 	
-	@fudge.patch('app.database.mappers.userMapper.UserMapper.get_collection')
-	def test_update_user_user_found(self, FakeGetCollection):
+	@fudge.patch('app.database.mappers.userMapper.UserMapper')
+	def test_update_user_user_found(self, FakeUserMapper):
 		query = {'id': 'test', 'name': 'test', 'email': 'test@test.com'}
 		update = {'id': 'test', 'name': 'modified', 'email': 'test@test.com'}
 		
-		(FakeGetCollection.is_callable().returns_fake()
-										.expects('update_one')
-										.with_args(update_dict=update)
-										.returns_fake()
-										.has_attr(matched_count=1, 
-												  modified_count=1, 
-												  raw_result=update))
+		(FakeUserMapper.provides('get_collection')
+					   .returns_fake()
+					   .expects('update_one')
+					   .with_args(update)
+					   .returns_fake()
+					   .has_attr(matched_count=1, 
+						         modified_count=1, 
+								 raw_result=update))
 
 		update_status = Student.update(query, update)
 		
@@ -96,40 +115,53 @@ class TestStudentMapperMethods(unittest.TestCase):
 		self.assertDictNotEqual(update_status.__dict__, query, 'The student was not updated')
 		
 
-	@fudge.patch('app.database.mappers.userMapper.UserMapper.get_collection')
-	def test_update_user_not_found(self, FakeGetCollection):
+	@fudge.patch('app.database.mappers.userMapper.UserMapper')
+	def test_update_user_not_found(self, FakeUserMapper):
 		query = {'id': 'test', 'name': 'test', 'email': 'test@test.com'}
 		update = {'id': 'test', 'name': 'modified', 'email': 'test@test.com'}
 		
-		(FakeGetCollection.is_callable().returns_fake()
-										.expects('update_one')
-										.with_args(update_dict=update)
-										.returns_fake()
-										.has_attr(matched_count=0, 
-												  modified_count=0, 
-												  raw_result=query))
+		(FakeUserMapper.provides('get_collection')
+					   .returns_fake()
+					   .expects('update_one')
+					   .with_args(update)
+					   .returns_fake()
+					   .has_attr(matched_count=0, 
+						         modified_count=0, 
+								 raw_result=update))
 
 		update_status = Student.update(query, update)
 		
 		fudge.verify()
 		self.assertEquals(update_status, None, 'An object was found when it should\'nt have')
 	
-	@fudge.patch('app.database.mappers.userMapper.UserMapper.get_collection')
-	def test_delete_user_found(self, FakeGetCollection):
-		(FakeGetCollection.is_callable().returns_fake()
-						  				.expects('delete')
-						  				.with_arg_count(1)
-						  				.returns_fake()
-						  				.has_attr(deleted_count=1))
+	@fudge.patch('app.database.mappers.userMapper.UserMapper')
+	def test_delete_user_found(self, FakeUserMapper):
+		(FakeUserMapper.provides('get_collection')
+					   .returns_fake()
+					   .expects('delete_one')
+					   .with_args({'id': 'test'})
+					   .returns_fake()
+					   .has_attr(deleted_count=1))
 		
-	@fudge.patch('app.database.mappers.userMapper.UserMapper.get_collection')
-	def test_delete_user_not_found(self, FakeGetCollection):
-		(FakeGetCollection.is_callable().returns_fake()
-						  				.expects('delete')
-						  				.with_arg_count(1)
-						  				.returns_fake()
-						  				.has_attr(deleted_count=0))
-
+		delete_result = Student.delete({'id': 'test'})
+		
+		fudge.verify()
+		self.assertTrue(delete_result, "Deleting Failed")
+		
+	@fudge.patch('app.database.mappers.userMapper.UserMapper')
+	def test_delete_user_not_found(self, FakeUserMapper):
+		(FakeUserMapper.provides('get_collection')
+					   .returns_fake()
+					   .expects('delete_one')
+					   .with_args({'id': 'test'})
+					   .returns_fake()
+					   .has_attr(deleted_count=0))
+		
+		delete_result = Student.delete({'id': 'test'})
+		
+		fudge.verify()
+		self.assertFalse(delete_result, 'Student was deleted when they should not have been')
+		
 class TestUserMethods(unittest.TestCase):
 
 	def setUp(self):
@@ -148,6 +180,18 @@ class TestUserMethods(unittest.TestCase):
 	def test_check_password_fail(self):
 		pass
 	
+	def test_equality(self):
+		stu1 = Student('test', 'test', 'test@test.com', 'password')
+		stu2 = Student('test', 'test', 'test@test.com', 'password')
+		
+		self.assertEqual(stu1, stu2, 'Students are not equal but they should be')
+	
+	def test_inequality(self):
+		stu1 = Student('test', 'test', 'test@test.com', 'password')
+		stu2 = Student('different', 'test', 'test@test.com', 'password')
+		
+		self.assertNotEqual(stu1, stu2, 'Students are equal but they should not be')
+
 
 if __name__ == '__main__':
 	unittest.main()

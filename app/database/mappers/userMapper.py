@@ -6,16 +6,17 @@ Created on Apr 10, 2015
 
 from app.database import mongo_client
 
+
 COLLECTION_NAME = 'users'
 
 class UserMapper(object):
     
-    @staticmethod
-    def get_count():
+    @classmethod
+    def get_count(cls):
         return UserMapper.get_collection().count()
     
-    @staticmethod
-    def get_collection():
+    @classmethod
+    def get_collection(cls):
         return mongo_client.db[COLLECTION_NAME]
     
     
@@ -26,10 +27,10 @@ class UserMapper(object):
 class StudentMapper(UserMapper):
     """Mapper class for students. Contains functions for database calls."""
     
-    @staticmethod
-    def get(query_dict):
+    @classmethod
+    def get(cls, query_dict):
         """Get Student based on query_dict"""
-        pass
+        return UserMapper.get_collection().find_one(query_dict)
     
     @staticmethod
     def insert(student):

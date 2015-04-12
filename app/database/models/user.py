@@ -1,14 +1,14 @@
 '''
 Created on Apr 6, 2015
 
-@author: chris, Randy
+@author: chris
 '''
 
-from app.database import mongo_client
+from app.database.models.common import CommonEqualityMixin
 from app.database.mappers.userMapper import StudentMapper, InstructorMapper
 
 
-class User(object):
+class User(CommonEqualityMixin, object):
     """
     Base User Class. Inherited by Student and Instructor
     Contains base functionality and fields for both classes
@@ -41,6 +41,15 @@ class Student(User, StudentMapper):
         self.team_ids = team_ids
         self.task_ids = task_ids
 
+    @staticmethod
+    def parse_doc(doc):
+        return Student(id=doc['uid'],
+                       name=doc['name'],
+                       email=doc['email'],
+                       password=doc['password'],
+                       message_ids=['message_ids'],
+                       team_ids=doc['team_ids'],
+                       task_ids=doc['task_ids'])
 
 class Instructor(User, InstructorMapper):
     
@@ -49,20 +58,3 @@ class Instructor(User, InstructorMapper):
         
     def add_class(self,class_id):
         self.class_id += [class_id]
-        
-    def save(self):
-        mongo_client.update('users',{'id': self.id},self.to_hashmap())
-        
-    @staticmethod  
-    def get_instructor(uid):
-        user_map = mongo_client.get_from('users', id)
-        if user_map != None:
-            user_object = Instructor(user_map['id'],user_map['name'],user_map['email'],user_map['message_ids'])
-            return user_object
-
-    @staticmethod  
-    def get_instructor_by_name(name):
-        user_map = mongo_client.get_from_attr('users', name)
-        if user_map != None:
-            user_object = Instructor(user_map['id'],user_map['name'],user_map['email'],user_map['message_ids'])
-            return user_object
