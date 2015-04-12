@@ -32,16 +32,16 @@ class StudentMapper(UserMapper):
         pass
     
     @staticmethod
-    def insert(self, student):
+    def insert(student):
         """Insert a new student into the collection"""
         pass
     
     @staticmethod
-    def update(self, query_dict, update_dict):
+    def update(query_dict, update_dict):
         pass
     
     @staticmethod
-    def delete(self, query_dict):
+    def delete(query_dict):
         pass
     
 
