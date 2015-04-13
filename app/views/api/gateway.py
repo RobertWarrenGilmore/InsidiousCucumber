@@ -7,10 +7,9 @@ Created on Apr 6, 2015
 from flask import jsonify, current_app
 from flask_restful import Resource, reqparse
 
-from app.database.User import Student, Instructor
+from app.database.models.user import Student, Instructor
 
 logger = current_app.config['APP_LOGGER']
-print(logger)
 
 class Login(Resource):
     def get(self):

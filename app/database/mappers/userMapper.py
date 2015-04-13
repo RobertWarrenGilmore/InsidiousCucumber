@@ -5,6 +5,7 @@ Created on Apr 10, 2015
 """
 
 from app.database import mongo_client
+from pydoc import Doc
 
 
 COLLECTION_NAME = 'users'
@@ -27,24 +28,33 @@ class UserMapper(object):
 class StudentMapper(UserMapper):
     """Mapper class for students. Contains functions for database calls."""
     
-    @classmethod
-    def get(cls, query_dict):
+    @staticmethod
+    def get(query_dict):
         """Get Student based on query_dict"""
         return UserMapper.get_collection().find_one(query_dict)
     
     @staticmethod
     def insert(student):
         """Insert a new student into the collection"""
-        pass
+        return UserMapper.get_collection().insert_one(student)
     
     @staticmethod
     def update(query_dict, update_dict):
-        pass
-    
+        doc = UserMapper.get_collection().update_one(query_dict, update_dict)
+        
+        if doc.modified_count == 1:
+            return doc
+        else:
+            return None
+
     @staticmethod
     def delete(query_dict):
-        pass
-    
+        doc = UserMapper.get_collection().delete_one(query_dict)
+        
+        if doc.deleted_count == 1:
+            return doc
+        else:
+            return None
 
 class InstructorMapper(UserMapper):
     

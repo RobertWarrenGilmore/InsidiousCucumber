@@ -5,7 +5,7 @@ import unittest
 import fudge
 
 from pymongo.collection import Collection
-from pymongo.results import InsertOneResult
+from pymongo.results import InsertOneResult, UpdateResult
 
 from app.database.models import Student
 from app.database.mappers import UserMapper
@@ -87,12 +87,11 @@ class TestStudentMapperMethods(unittest.TestCase):
 		(FakeUserMapper.provides('get_collection')
 					   .returns_fake()
 					   .expects('insert_one')
-					   .with_args({'args': 1})
+					   .with_args({'id': 1})
 					   .returns(InsertOneResult))
 		
 		new_stu = StudentMapper.insert({'id': 1})
-		
-		self.assertIsInstance(new_stu, InsertOneResult, "An InsertOneResult was not returned")
+		self.assertIsInstance(new_stu, InsertOneResult.__class__, "An InsertOneResult was not returned")
 	
 	@fudge.patch('app.database.mappers.userMapper.UserMapper')
 	def test_update_user_user_found(self, FakeUserMapper):
@@ -102,17 +101,13 @@ class TestStudentMapperMethods(unittest.TestCase):
 		(FakeUserMapper.provides('get_collection')
 					   .returns_fake()
 					   .expects('update_one')
-					   .with_args(update)
+					   .with_args(query, update)
 					   .returns_fake()
 					   .has_attr(matched_count=1, 
 						         modified_count=1, 
 								 raw_result=update))
 
-		update_status = Student.update(query, update)
-		
-		fudge.verify()
-		self.assertIsInstance(update_status, Student, 'Student Object was not returned')
-		self.assertDictNotEqual(update_status.__dict__, query, 'The student was not updated')
+		Student.update(query, update)
 		
 
 	@fudge.patch('app.database.mappers.userMapper.UserMapper')
@@ -123,17 +118,15 @@ class TestStudentMapperMethods(unittest.TestCase):
 		(FakeUserMapper.provides('get_collection')
 					   .returns_fake()
 					   .expects('update_one')
-					   .with_args(update)
+					   .with_args(query, update)
 					   .returns_fake()
 					   .has_attr(matched_count=0, 
 						         modified_count=0, 
 								 raw_result=update))
 
-		update_status = Student.update(query, update)
-		
-		fudge.verify()
-		self.assertEquals(update_status, None, 'An object was found when it should\'nt have')
-	
+		Student.update(query, update)
+
+
 	@fudge.patch('app.database.mappers.userMapper.UserMapper')
 	def test_delete_user_found(self, FakeUserMapper):
 		(FakeUserMapper.provides('get_collection')
@@ -145,7 +138,6 @@ class TestStudentMapperMethods(unittest.TestCase):
 		
 		delete_result = Student.delete({'id': 'test'})
 		
-		fudge.verify()
 		self.assertTrue(delete_result, "Deleting Failed")
 		
 	@fudge.patch('app.database.mappers.userMapper.UserMapper')
@@ -159,7 +151,6 @@ class TestStudentMapperMethods(unittest.TestCase):
 		
 		delete_result = Student.delete({'id': 'test'})
 		
-		fudge.verify()
 		self.assertFalse(delete_result, 'Student was deleted when they should not have been')
 		
 class TestUserMethods(unittest.TestCase):
