@@ -70,6 +70,16 @@ app.controller('ProjectController', function ($http, metarService, $routeParams,
 		$location.path('/messages');
 	};
 
+	self.gotoTasks = function () {
+		$location.search('id', self.project.id);
+		$location.path('/tasks');
+	};
+
+	self.gotoTeamManagement = function () {
+		$location.search('id', self.project.id);
+		$location.path('/teamManagement');
+	};
+
 	self.gotoTeamPreferenceSurvey = function () {
 		$location.path('/teamPreferenceSurvey');
 	};
