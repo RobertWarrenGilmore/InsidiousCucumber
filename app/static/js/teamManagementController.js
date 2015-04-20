@@ -11,7 +11,7 @@ app.controller('TeamManagementController', function ($scope, $http, $routeParams
 	console.log('Started TeamManagementController');
 
 	var self = this;
-	self.loaded = false;
+	self.modified = false;
 
 	self.project = {name: "Main Project"};
 
@@ -31,6 +31,9 @@ app.controller('TeamManagementController', function ($scope, $http, $routeParams
 			name: "Team 3",
 			members: ["Master Chief", "Princess Peach", "Donkey Kong"]
 		}];
+	
+		
+	self.oldteams = angular.copy(self.teams);
 
 	self.add = function() {
 		self.teams.push({
@@ -38,6 +41,20 @@ app.controller('TeamManagementController', function ($scope, $http, $routeParams
 			name: "Team " + (self.teams.length + 1),
 			members: []
 		});
+	};
+
+	self.cancel = function() {
+		self.teams = angular.copy(self.oldteams);
+
+		self.modified = false;
+		$scope.$digest();
+	};
+
+	self.save = function() {
+		self.oldteams = angular.copy(self.teams);
+
+		self.modified = false;
+		$scope.$digest();
 	};
 
 	self.dropped = function(dragEl, dropEl) {
@@ -56,7 +73,7 @@ app.controller('TeamManagementController', function ($scope, $http, $routeParams
 		}
 		
 		self.teams[drop_team].members.push(name);
-	
+		self.modified = true;
 		$scope.$digest();
 	};
 });
