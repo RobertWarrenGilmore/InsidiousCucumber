@@ -12,29 +12,17 @@ app.controller('LoginController', function ($scope, $http, $location) {
 
 	var self = this;
 	
-	$scope.app.user = {};
-
-	self.users = [{
-		'id': 'wes7817',
-		'pass': 'test',
-		'fname': 'Wayne',
-		'lname': 'Starr',
-		'professor': true
-	}, {
-		'id': 'cte6149',
-		'pass': 'test',
-		'fname': 'Chris',
-		'lname': 'Enoch',
-		'professor': false
-	}];
-	
 	self.checkUser = function() {
-		for (var i = 0; i < self.users.length; i++) {
-			if (self.users[i].id === self.username && self.users[i].pass === self.password) {
-				$scope.app.user = self.users[i];
-				$location.path('/home');
-			}
-		}
-		self.invalidPass = true;
+		$http.post('/login', {username:self.username, password:self.password}).
+			success(function(data, status, headers, config) {
+				if (data.success) {
+					$location.path('/home');
+				} else {
+					self.invalidPass = true;
+				}
+			}).
+			error(function(data, status, headers, config) {
+				self.invalidPass = true;
+		});
 	};
 });

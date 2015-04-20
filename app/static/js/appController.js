@@ -10,10 +10,26 @@
 var app = angular.module('minerva', ['ngRoute', 'ui.bootstrap', 'ui.calendar', 'lvl.directives.dragdrop']);
 
 /*GLOBAL CONTROLLER*/
-app.controller('AppController', function () {
+app.controller('AppController', function ($http) {
 	console.log('Creating App Controller');
 
 	var self = this;
 
 	self.user = {};
+
+	$http.get('/user').
+			success(function(data, status, headers, config) {
+				if (data.first != undefined) {
+					self.user = {
+						first: data.first,
+						last: data.last,
+						username: data.username,
+						type: data.type,
+						courses: data.courses,
+					};
+				}
+			}).
+			error(function(data, status, headers, config) {
+				
+		});
 });

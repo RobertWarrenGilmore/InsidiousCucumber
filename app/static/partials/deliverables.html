@@ -1,7 +1,7 @@
-<h2 ng-if="!projectCtrl.edit">{{deliverablesCtrl.project.name}} Deliverables</h2>
+<h2>{{deliverablesCtrl.project.name}} Deliverables</h2>
 <hr>
-<button class="btn" ng-if="app.user.professor">Add Deliverable</button>
-<button class="btn" ng-if="app.user.professor">Toggle Projects</button>
+<button class="btn" ng-if="app.user.type=='p'">Add Deliverable</button>
+<button class="btn" ng-if="app.user.type=='p'">Toggle Projects</button>
 &nbsp;
 <button class="btn" style="float:right">Download</button>
 <hr>

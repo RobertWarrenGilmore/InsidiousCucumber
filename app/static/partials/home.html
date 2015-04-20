@@ -6,14 +6,14 @@
 <!-- Display Courses -->
 <div id="courses" ng-repeat="course in homeCtrl.courses">
 	<div class="container">
-		<button style="float:right;margin-top:20px;" class="btn" ng-if="app.user.professor" ng-click="course.addProject=true">
+		<button style="float:right;margin-top:20px;" class="btn" ng-if="app.user.type=='p'" ng-click="course.addProject=true">
 			Add Project
 		</button>
 		<h3>{{course.name}}</h3>
 		<hr>
 		<!-- Existing Projects -->
 		<div class="col-sm-6 col-xs-12 text-center panel panel-default hover" ng-click="homeCtrl.gotoProject(project.id);" ng-repeat="project in course.projects">
-			<button style="float:right;margin-top:7px;" class="btn" ng-if="app.user.professor" ng-click="homeCtrl.removeProject(course, project)">
+			<button style="float:right;margin-top:7px;" class="btn" ng-if="app.user.type=='p'" ng-click="homeCtrl.removeProject(course, project)">
 				Remove
 			</button>
 			<h4 class="text-left">{{project.name}}</h4>
@@ -28,13 +28,13 @@
 			<p class="compressed" ng-if="project.notifications.length < 2">
 				&nbsp;
 			</p>
-			<p class="text-left compressed" ng-if="!app.user.professor"><b>Assigned Team</b></p>
-			<p class="compressed" ng-if="!app.user.professor">{{project.team}}</p>
-			<p class="text-left compressed" ng-if="app.user.professor"><b>Number of Teams</b></p>
-			<p class="compressed" ng-if="app.user.professor && project.numteams > 0">
+			<p class="text-left compressed" ng-if="!app.user.type=='p'"><b>Assigned Team</b></p>
+			<p class="compressed" ng-if="!app.user.type=='p'">{{project.team}}</p>
+			<p class="text-left compressed" ng-if="app.user.type=='p'"><b>Number of Teams</b></p>
+			<p class="compressed" ng-if="app.user.type=='p' && project.numteams > 0">
 				{{project.numteams}}
 			</p>
-			<p class="compressed" ng-if="app.user.professor && project.numteams == 0">
+			<p class="compressed" ng-if="app.user.type=='p' && project.numteams == 0">
 				No Teams Created
 			</p>
 			<hr>
@@ -49,10 +49,10 @@
 			<p class="text-left compressed"><b>Description</b></p>
 			<textarea style="width:100%;height:67px;" ng-model="course.addProjectDesc"></textarea>
 			<hr>
-			<button style="float:right;margin-left:10px;" class="btn" ng-click="homeCtrl.addProject(course)" ng-if="app.user.professor">
+			<button style="float:right;margin-left:10px;" class="btn" ng-click="homeCtrl.addProject(course)" ng-if="app.user.type=='p'">
 				Submit
 			</button>
-			<button style="float:right" class="btn" ng-click="course.addProject=false" ng-if="app.user.professor">
+			<button style="float:right" class="btn" ng-click="course.addProject=false" ng-if="app.user.type=='p'">
 				Cancel
 			</button>
 			<br>&nbsp;
