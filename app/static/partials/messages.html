@@ -1,0 +1,13 @@
+<h2>{{messagesCtrl.project.name}} Messages</h2>
+<hr>
+<input type="text" ng-model="messagesCtrl.message" style="width:80%"
+	ng-keyup="$event.keyCode == 13 ? messagesCtrl.send() : null"/>
+&nbsp;
+<button class="btn" style="float:right" ng-click="messagesCtrl.send()">
+	Send
+</button>
+<hr>
+<div ng-repeat="message in messagesCtrl.messages">
+	<span style="float:left"><b>{{message.sender}}</b><br>{{message.time}}</span>
+	<span style="float:right"><h3>{{message.message}}</h3></span><br><br><br>
+</div>

@@ -65,6 +65,11 @@ app.controller('ProjectController', function ($http, metarService, $routeParams,
 		$location.path('/deliverables');
 	};
 
+	self.gotoMessages = function () {
+		$location.search('id', self.project.id);
+		$location.path('/messages');
+	};
+
 	self.gotoTeamPreferenceSurvey = function () {
 		$location.path('/teamPreferenceSurvey');
 	};
