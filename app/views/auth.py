@@ -17,14 +17,14 @@ def login():
     data = json.loads(request.data)
     stuMap = Student.get({'username': data["username"]})
     print(stuMap)
-    if stuMap is not None:
+    if stuMap['type'] == 'u':
         student = Student.parse_doc(stuMap)
         if student.check_password(data['password']):
             login_user(student)
             return jsonify(success=True)
     
     instructMap = Instructor.get({'username': data['username']})
-    if instructMap is not None:
+    if stuMap['type'] == 'p':
         instructor = Instructor.parse_doc(instructMap)
         if instructor.check_password(data['password']):
             login_user(instructor)

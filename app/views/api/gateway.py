@@ -9,7 +9,6 @@ from flask_restful import Resource, reqparse
 from flask_login import current_user
 
 from app.database.models import Course, Project, Team, Student
-from werkzeug import redirect
 
 logger = current_app.config['APP_LOGGER']
 
@@ -17,10 +16,12 @@ class UserApi(Resource):
     def get(self):
         if current_user.is_authenticated():
             logger.info("Returning User Info: " + current_user.first_name + " " + current_user.last_name)
+
             
             return jsonify(first=current_user.first_name,
                            last=current_user.last_name,
-                           username=current_user.username
+                           username=current_user.username,
+                           type=current_user.type
                            )
         else:
             return jsonify({})
