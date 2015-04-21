@@ -38,7 +38,7 @@ app.controller('MessagesController', function ($scope, $http, $routeParams) {
 
 	self.send = function() {
 		self.messages.unshift({
-			sender: $scope.app.user.fname + ' ' + $scope.app.user.lname,
+			sender: $scope.app.user.first + ' ' + $scope.app.user.last,
 			username: $scope.app.user.id,
 			message: self.message, 
 			time: "2015-04-19T13:02:53+00:00"
