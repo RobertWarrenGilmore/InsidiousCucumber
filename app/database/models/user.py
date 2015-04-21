@@ -21,7 +21,7 @@ class User(CommonEqualityMixin, UserMixin, object):
     def __init__(self, uid, first_name, last_name, username, password, message_ids):
         self.uid = uid
         self.first_name = first_name
-        self.first_name = last_name
+        self.last_name = last_name
         self.username = username
         self.message_ids = message_ids
         self.password = self.encrypt(password)
@@ -36,7 +36,9 @@ class User(CommonEqualityMixin, UserMixin, object):
     def check_password(self, pwd):
         return True
 
-
+    def get_id(self):
+        return self.uid
+    
 class Student(User, StudentMapper):
     """
     Student in the system
@@ -48,7 +50,7 @@ class Student(User, StudentMapper):
 
     @staticmethod
     def parse_doc(doc):
-        return Student(id=doc['uid'],
+        return Student(uid=doc['uid'],
                        first_name=doc['first_name'],
                        last_name=doc['last_name'],
                        username=doc['username'],

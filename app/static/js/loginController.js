@@ -13,7 +13,7 @@ app.controller('LoginController', function ($scope, $http, $location) {
 	var self = this;
 	
 	self.checkUser = function() {
-		$http.post('/login', {username:self.username, password:self.password}).
+		$http.post('/auth/login', {username:self.username, password:self.password}).
 			success(function(data, status, headers, config) {
 				if (data.success) {
 					$location.path('/home');

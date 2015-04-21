@@ -16,7 +16,6 @@ class Team(TeamMapper):
         self.message_ids = message_ids
         self.assign_ids = assign_ids
         self.meeting_ids = meeting_ids
-        self.save()
         
     def add_message(self, tid):
         pass
@@ -26,6 +25,3 @@ class Team(TeamMapper):
         
     def add_meeting(self, tid):
         pass
-    
-    def to_hashmap(self):
-        return self.__dict__

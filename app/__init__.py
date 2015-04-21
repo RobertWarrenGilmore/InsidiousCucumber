@@ -26,8 +26,11 @@ from views import home, auth
 minerva.register_blueprint(home.mod)
 minerva.register_blueprint(auth.mod, url_prefix='/auth')
 
-from app.views.api.gateway import UserApi
+from app.views.api.gateway import UserApi, CourseApi, TeamApi, ProjectApi 
 api.add_resource(UserApi, '/user')
+api.add_resource(CourseApi, '/course')
+api.add_resource(TeamApi, '/team')
+api.add_resource(ProjectApi, '/project')
 
 @minerva.before_request
 def config_g():
