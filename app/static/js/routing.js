@@ -29,6 +29,14 @@ app.config(function ($routeProvider) {
 		templateUrl: 'static/partials/messages.html',
 		controller: 'MessagesController',
 		controllerAs: 'messagesCtrl'
+	}).when('/tasks', {
+		templateUrl: 'static/partials/tasks.html',
+		controller: 'TasksController',
+		controllerAs: 'tasksCtrl'
+	}).when('/teamManagement', {
+		templateUrl: 'static/partials/teamManagement.html',
+		controller: 'TeamManagementController',
+		controllerAs: 'teamManagementCtrl'
 	}).when('/teamPreferenceSurvey', {
 		templateUrl: 'static/partials/teamPreferenceSurvey.html',
 		controller: 'TeamPreferenceSurveyController',

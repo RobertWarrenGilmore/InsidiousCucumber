@@ -7,7 +7,7 @@
 /*global angular*/
 'use strict';
 
-var app = angular.module('minerva', ['ngRoute', 'ui.bootstrap', 'ui.calendar']);
+var app = angular.module('minerva', ['ngRoute', 'ui.bootstrap', 'ui.calendar', 'lvl.directives.dragdrop']);
 
 /*GLOBAL CONTROLLER*/
 app.controller('AppController', function () {
