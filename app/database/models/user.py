@@ -56,7 +56,7 @@ class Student(User, StudentMapper):
                        last_name=doc['last_name'],
                        username=doc['username'],
                        password=doc['password'],
-                       type=doc['type'],
+                       utype=doc['type'],
                        message_ids=doc['message_ids'],
                        team_ids=doc['team_ids'],
                        task_ids=doc['task_ids'])
