@@ -53,17 +53,27 @@ class Student(User, StudentMapper):
                        last_name=doc['last_name'],
                        username=doc['username'],
                        password=doc['password'],
-                       message_ids=['message_ids'],
+                       message_ids=doc['message_ids'],
                        team_ids=doc['team_ids'],
                        task_ids=doc['task_ids'])
 
 class Instructor(User, InstructorMapper):
     
-    def __init__(self, uid,first_name, last_name, username, password, message_ids=[]):
-        super(self.__class__, self).__init__(uid, first_name, last_name, username, password, message_ids)
+    def __init__(self, uid,first_name, last_name, username, password, message_ids=[], class_ids=[]):
+        super(self.__class__, self).__init__(uid, first_name, last_name, username, password, message_ids, class_ids)
         
     def add_class(self,class_id):
         self.class_id += [class_id]
+        
+    @staticmethod
+    def parse_doc(doc):
+        return Instructor(id=doc['uid'],
+                       first_name=doc['first_name'],
+                       last_name=doc['last_name'],
+                       username=doc['username'],
+                       password=doc['password'],
+                       message_ids=doc['message_ids'],
+                       class_ids=doc['class_ids'])
         
 @login.user_loader
 def load_user(user_id):
