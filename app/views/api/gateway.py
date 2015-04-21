@@ -9,6 +9,7 @@ from flask_restful import Resource, reqparse
 from flask_login import current_user
 
 from app.database.models import Course, Project, Team, Student
+from werkzeug import redirect
 
 logger = current_app.config['APP_LOGGER']
 
@@ -21,6 +22,8 @@ class UserApi(Resource):
                            last=current_user.last_name,
                            username=current_user.username
                            )
+        else:
+            return jsonify({})
 
 class TeamApi(Resource):
     def get(self):
@@ -56,7 +59,10 @@ class CourseApi(Resource):
         
         courseMap = Course.get({'cid': args['course_id']})
         if courseMap is not None:
-            return jsonify(courseMap)
+            return jsonify(course_id=courseMap['cid'],
+                           name=courseMap['name'],
+                           description=courseMap['descr'],
+                           projects=courseMap['proj_ids'])
         return jsonify({})
 
 class ProjectApi(Resource):
@@ -67,7 +73,12 @@ class ProjectApi(Resource):
         
         projMap = Project.get({'pid':args['project_id']})
         if projMap is not None:
-            return jsonify(projMap)
+            return jsonify(project_id=projMap['pid'],
+                           name=projMap['name'],
+                           description=projMap['descr'],
+                           url=projMap['url'],
+                           num_teams=len(projMap['teams'])
+                           )
         return jsonify({})
         
 class TeamPrefApi(Resource):

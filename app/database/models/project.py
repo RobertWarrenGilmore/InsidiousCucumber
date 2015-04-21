@@ -2,13 +2,13 @@ from app.database.mappers.projectMapper import ProjectMapper
 
 class Project(ProjectMapper):
 	
-	def __init__(self, pid, name, description, url):
-		self.id = id
+	def __init__(self, pid, name, url, descr="No Description", teams=[], deliverables=[]):
+		self.pid = pid
 		self.name = name
-		self.description = description
+		self.descr = descr
 		self.url = url
-		self.teams = []
-		self.deliverables = []
+		self.teams = teams
+		self.deliverables = deliverables
 		
 	def add_team(self,team_id):
 		pass
