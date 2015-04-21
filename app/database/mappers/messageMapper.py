@@ -1,10 +1,11 @@
 from app.database import mongo_client
 from pydoc import Doc
 
+#Kaity was here.
+
 COLLECTION_NAME = 'messages'
 
 class BasicMessageMapper(object):
-	
 	@classmethod
     def get_count(cls):
         return BasicMessageMapper.get_collection().count()

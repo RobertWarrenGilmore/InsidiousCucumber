@@ -5,7 +5,7 @@ Created on Apr 6, 2015
 '''
 
 from app.database.models.common import CommonEqualityMixin
-from app.database.mappers.userMapper import UserMessageMapper, TeamMessageMapper
+from app.database.mappers.messageMapper import UserMessageMapper, TeamMessageMapper
 
 
 class BasicMessage(CommonEqualityMixin,object):
