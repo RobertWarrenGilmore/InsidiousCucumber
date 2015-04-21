@@ -5,39 +5,31 @@ Created on Apr 6, 2015
 '''
 
 from flask import jsonify, current_app
-from flask_restful import Resource, reqparse
+from flask_restful import Resource
+from flask_login import current_user
 
-from app.database.models.user import Student, Instructor
 
 logger = current_app.config['APP_LOGGER']
 
-class Login(Resource):
+class UserApi(Resource):
     def get(self):
-        return get_login_info()
-    
-def get_login_info():
-    
-    parser = reqparse.RequestParser()
-    parser.add_argument('name', type=str)
-    parser.add_argument('password', type=str)
-    args = parser.parse_args()
-    
-    logger.info("This is a test log")
-    
-    stu = Student.get_student_by_name(args['name'])
-    if stu is not None:
-        if stu.check_password(args['password']):
-            retDic = {}
-            retDic['user'] = stu.__dict__
-            retDic['professor'] = False
-            return jsonify(retDic)
-    return jsonify({'logggedin':False})
-    
-    instruct = Instructor.get_instructor_by_name(args['name'])
-    if instruct is not None:
-        if stu.check_password(args['password']):
-            retDic = {}
-            retDic['user'] = instruct
-            retDic['professor'] = False
-            return jsonify(retDic)
-    return jsonify({'logggedin':False})
+        if current_user.is_authenticated():
+            userDict = {'first': current_user.first,
+                        'last': current_user.last,
+                        'username': current_user.username,
+                        }
+            logger.info("Returning User Info: " + str(userDict))
+            
+            return jsonify(userDict)
+
+class TeamApi(Resource):
+    pass
+
+class CourseApi(Resource):
+    pass
+
+class ProjectApi(Resource):
+    pass
+
+class TeamPrefApi(Resource):
+    pass

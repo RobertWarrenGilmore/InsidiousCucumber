@@ -4,20 +4,25 @@ Created on Apr 6, 2015
 @author: chris
 '''
 
+from flask_login import UserMixin
+
+from app import login
 from app.database.models.common import CommonEqualityMixin
 from app.database.mappers.userMapper import StudentMapper, InstructorMapper
 
 
-class User(CommonEqualityMixin, object):
+
+class User(CommonEqualityMixin, UserMixin, object):
     """
     Base User Class. Inherited by Student and Instructor
     Contains base functionality and fields for both classes
     """
 
-    def __init__(self, uid, name, email, password, message_ids):
+    def __init__(self, uid, first_name, last_name, username, password, message_ids):
         self.uid = uid
-        self.name = name
-        self.email = email
+        self.first_name = first_name
+        self.first_name = last_name
+        self.username = username
         self.message_ids = message_ids
         self.password = self.encrypt(password)
 
@@ -36,16 +41,17 @@ class Student(User, StudentMapper):
     """
     Student in the system
     """
-    def __init__(self, uid, name, email, password, message_ids=[], team_ids=[], task_ids=[]):
-        super(self.__class__, self).__init__(uid, name, email, password, message_ids)
+    def __init__(self, uid, first_name, last_name, username, password, message_ids=[], team_ids=[], task_ids=[]):
+        super(self.__class__, self).__init__(uid, first_name, last_name, username, password, message_ids)
         self.team_ids = team_ids
         self.task_ids = task_ids
 
     @staticmethod
     def parse_doc(doc):
         return Student(id=doc['uid'],
-                       name=doc['name'],
-                       email=doc['email'],
+                       first_name=doc['first_name'],
+                       last_name=doc['last_name'],
+                       username=doc['username'],
                        password=doc['password'],
                        message_ids=['message_ids'],
                        team_ids=doc['team_ids'],
@@ -53,8 +59,18 @@ class Student(User, StudentMapper):
 
 class Instructor(User, InstructorMapper):
     
-    def __init__(self, uid, name, email, password, message_ids=[]):
-        super(self.__class__, self).__init__(uid, name, email, password, message_ids)
+    def __init__(self, uid,first_name, last_name, username, password, message_ids=[]):
+        super(self.__class__, self).__init__(uid, first_name, last_name, username, password, message_ids)
         
     def add_class(self,class_id):
         self.class_id += [class_id]
+        
+@login.user_loader
+def load_user(user_id):
+    """Loader used by the login manager"""
+    if Student.get({'uid': user_id}):
+        return Student.parse_doc(Student.get({'uid': user_id}))
+    elif Instructor.get({'uid': user_id}):
+        return Instructor.parse_doc(Instructor.get({'uid': user_id}))
+    else:
+        return None;
