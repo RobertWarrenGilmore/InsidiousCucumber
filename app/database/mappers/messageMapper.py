@@ -7,12 +7,12 @@ COLLECTION_NAME = 'messages'
 
 class BasicMessageMapper(object):
 	@classmethod
-    def get_count(cls):
+	def get_count(cls):
         return BasicMessageMapper.get_collection().count()
     
-    @classmethod
-    def get_collection(cls):
-        return mongo_client.db[COLLECTION_NAME]
+	@classmethod
+	def get_collection(cls):
+		return mongo_client.db[COLLECTION_NAME]
     
     
     def to_hashmap(self):
