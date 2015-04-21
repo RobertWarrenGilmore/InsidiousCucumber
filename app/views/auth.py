@@ -20,7 +20,6 @@ def login():
     if stuMap is not None:
         student = Student.parse_doc(stuMap)
         if student.check_password(data['password']):
-            print(student.to_hashmap())
             login_user(student)
             return jsonify(success=True)
     
@@ -40,4 +39,4 @@ def logout():
     """Log the user out and update user.last_seen."""
     logout_user()
     
-    return redirect(url_for('home.home'))
+    return redirect(url_for('home.index'))

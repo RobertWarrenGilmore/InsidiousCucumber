@@ -16,8 +16,8 @@
 		No Notifications
 	</p>
 	<hr>
-	<p class="text-left compressed" ng-if="!app.user.type=='p'"><b>Assigned Team</b></p>
-	<p class="compressed" ng-if="!app.user.type=='p'">{{projectCtrl.project.team}}</p>
+	<p class="text-left compressed" ng-if="app.user.type!='p'"><b>Assigned Team</b></p>
+	<p class="compressed" ng-if="app.user.type!='p'">{{projectCtrl.project.team}}</p>
 	<p class="text-left compressed" ng-if="app.user.type=='p'"><b>Number of Teams</b></p>
 	<p class="compressed" ng-if="app.user.type=='p' && projectCtrl.project.numteams > 0">
 		{{projectCtrl.project.numteams}}
@@ -33,9 +33,9 @@
 <div class="col-xs-12 col-sm-6 col-md-9">
 	<button class="btn btn-lg" style="margin-bottom:5px" ng-click="projectCtrl.gotoTeamManagement()" ng-if="app.user.type=='p'">Manage Teams</button>
 	<button class="btn btn-lg" style="margin-bottom:5px" ng-click="projectCtrl.gotoDeliverables()" ng-if="app.user.type=='p'">Manage Deliverables</button>
-	<button class="btn btn-lg" style="margin-bottom:5px" ng-click="projectCtrl.gotoTeamPreferenceSurvey()" ng-if="!app.user.type=='p'">Specify Team Preferences</button>
-	<button class="btn btn-lg" style="margin-bottom:5px" ng-click="projectCtrl.gotoTasks()" ng-if="!app.user.type=='p'">Manage Tasks</button>
-	<button class="btn btn-lg" style="margin-bottom:5px" ng-if="!app.user.type=='p'">Schedule Meetings</button>
-	<button class="btn btn-lg" style="margin-bottom:5px" ng-click="projectCtrl.gotoMessages()" ng-if="!app.user.type=='p'">Message Team</button>
-	<button class="btn btn-lg" style="margin-bottom:5px" ng-click="projectCtrl.gotoDeliverables()" ng-if="!app.user.type=='p'">View Deliverables</button>
+	<button class="btn btn-lg" style="margin-bottom:5px" ng-click="projectCtrl.gotoTeamPreferenceSurvey()" ng-if="app.user.type!='p'">Specify Team Preferences</button>
+	<button class="btn btn-lg" style="margin-bottom:5px" ng-click="projectCtrl.gotoTasks()" ng-if="app.user.type!='p'">Manage Tasks</button>
+	<button class="btn btn-lg" style="margin-bottom:5px" ng-if="app.user.type!='p'">Schedule Meetings</button>
+	<button class="btn btn-lg" style="margin-bottom:5px" ng-click="projectCtrl.gotoMessages()" ng-if="app.user.type!='p'">Message Team</button>
+	<button class="btn btn-lg" style="margin-bottom:5px" ng-click="projectCtrl.gotoDeliverables()" ng-if="app.user.type!='p'">View Deliverables</button>
 </div>
