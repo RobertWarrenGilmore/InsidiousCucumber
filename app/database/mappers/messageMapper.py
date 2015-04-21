@@ -37,7 +37,6 @@ class UserMessageMapper(MessageMapper):
 	@staticmethod
 	def update(query_dict, update_dict):
 		doc = MessageMapper.get_collection().update_one(query_dict, update_dict)
-		
 		if doc.modified_count == 1:
 			return doc
 		else:
