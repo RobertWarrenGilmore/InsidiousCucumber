@@ -52,7 +52,10 @@
 						</span>
 					</a>
 				</div>
-				<p class="navbar-text navbar-right" ng-if="app.user.username != null">Logged in as {{app.user.first + ' ' + app.user.last}}</p>
+				<p class="navbar-text navbar-right" ng-if="app.user.username != null">Logged in as {{app.user.first + ' ' + app.user.last}} | 
+				<a href="/auth/logout" style="color: white">
+					Logout
+				</a></p>
 			</div>
 		</nav>
 		<div class="container container-white" ng-view></div>

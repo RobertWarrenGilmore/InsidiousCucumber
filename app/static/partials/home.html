@@ -28,8 +28,8 @@
 			<p class="compressed" ng-if="project.notifications.length < 2">
 				&nbsp;
 			</p>
-			<p class="text-left compressed" ng-if="!app.user.type=='p'"><b>Assigned Team</b></p>
-			<p class="compressed" ng-if="!app.user.type=='p'">{{project.team}}</p>
+			<p class="text-left compressed" ng-if="app.user.type!='p'"><b>Assigned Team</b></p>
+			<p class="compressed" ng-if="app.user.type!='p'">{{project.team}}</p>
 			<p class="text-left compressed" ng-if="app.user.type=='p'"><b>Number of Teams</b></p>
 			<p class="compressed" ng-if="app.user.type=='p' && project.numteams > 0">
 				{{project.numteams}}
