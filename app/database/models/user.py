@@ -6,6 +6,7 @@
 from flask_login import UserMixin
 from mongoalchemy.document import Document
 from mongoalchemy.fields import StringField, IntField, EnumField, ListField
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import login
 from app.database.models.common import CommonEqualityMixin
@@ -24,7 +25,7 @@ class User(CommonEqualityMixin, UserMixin, object):
     username = StringField()
     type = EnumField()
     message_ids = ListField()
-    password = StringField()
+    encryptpw = StringField()
 
     def __init__(self, uid, first_name, last_name, username, password, utype, message_ids):
         self.uid = uid
@@ -33,16 +34,25 @@ class User(CommonEqualityMixin, UserMixin, object):
         self.username = username
         self.type = utype
         self.message_ids = message_ids
-        self.password = self.encrypt(password)
+        self.encryptpw = self.encrypt(password)
 
+<<<<<<< HEAD
     # TODO: Add Real Encryption for users stored in DB
     def encrypt(self, password):
         # reverse password... its so secret!
         return password
+=======
+    @property
+    def password(self):
+        raise AttributeError('password is not a readable attribute')
 
-    # TODO: Add Real Password Checking
-    def check_password(self, pwd):
-        return True
+    @password.setter
+    def password(self, password):
+        self.encryptpw = generate_password_hash(password)
+>>>>>>> 61a75bba7a1942177eb58bb17996067bd9da5010
+
+    def verify_password(self, password):
+        return check_password_hash(self.encryptpw, password)
 
     def get_id(self):
         return self.uid
