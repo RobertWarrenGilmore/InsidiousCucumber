@@ -16,6 +16,8 @@ class User(CommonEqualityMixin, UserMixin, object):
     Contains base functionality and fields for both classes
     """
 
+    config_collection_name = 'users'
+
     uid = IntField()
     first_name = StringField()
     last_name = StringField()

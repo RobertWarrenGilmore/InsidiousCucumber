@@ -4,6 +4,8 @@ from mongoalchemy.fields import IntField, StringField, ListField
 
 class Project(Document):
 
+    config_collection_name = 'projects'
+
     pid = IntField()
     name = StringField()
     descr = StringField()

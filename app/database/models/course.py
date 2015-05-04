@@ -8,7 +8,9 @@ from mongoalchemy.fields import StringField, IntField, ListField
 
 
 class Course(Document):
-    
+
+    config_collection_name = 'classes'
+
     cid = IntField()
     name = StringField()
     descr = StringField()

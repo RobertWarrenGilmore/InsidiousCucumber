@@ -10,7 +10,9 @@ from mongoalchemy.fields.fields import BoolField
 
 
 class BasicMessage(CommonEqualityMixin, object):
-    
+
+    config_collection_name = "messages"
+
     mid = IntField()
     text = StringField()
     sender = IntField()

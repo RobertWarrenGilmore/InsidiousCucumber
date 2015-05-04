@@ -10,6 +10,8 @@ from mongoalchemy.fields import StringField, IntField, ListField
 
 class Team(Document):
 
+    config_collection_name = 'teams'
+
     tid = IntField()
     name = StringField()
     user_ids = ListField()

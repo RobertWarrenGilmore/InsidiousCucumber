@@ -9,6 +9,10 @@ from mongoalchemy.fields.fields import DateTimeField, StringField
 
 
 class Assignment(object):
+
+    # Set the collection name used in the database
+    config_collection_name = "assignments"
+
     aid = IntField()
     class_id = IntField()
     due = DateTimeField()
