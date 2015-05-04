@@ -36,12 +36,6 @@ class User(CommonEqualityMixin, UserMixin, object):
         self.message_ids = message_ids
         self.encryptpw = self.encrypt(password)
 
-<<<<<<< HEAD
-    # TODO: Add Real Encryption for users stored in DB
-    def encrypt(self, password):
-        # reverse password... its so secret!
-        return password
-=======
     @property
     def password(self):
         raise AttributeError('password is not a readable attribute')
@@ -49,7 +43,6 @@ class User(CommonEqualityMixin, UserMixin, object):
     @password.setter
     def password(self, password):
         self.encryptpw = generate_password_hash(password)
->>>>>>> 61a75bba7a1942177eb58bb17996067bd9da5010
 
     def verify_password(self, password):
         return check_password_hash(self.encryptpw, password)
