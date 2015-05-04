@@ -2,16 +2,16 @@ from flask import Flask, g
 from flask_restful import Api
 from flask_login import LoginManager
 
-#create the app
+# create the app
 minerva = Flask(__name__)
 
-#add the API
+# add the API
 api = Api(minerva)
 login = LoginManager(minerva)
 
 login.session_protection = "strong"
 
-#Configure the app using a class found in settings.py
+# Configure the app using a class found in settings.py
 minerva.config.from_object('app.settings.DevConfig')
 
 logger = minerva.config['APP_LOGGER']
@@ -21,7 +21,7 @@ logger.info("Logger created")
 app_ctx = minerva.app_context()
 app_ctx.push()
     
-#Register all of the blueprints
+# Register all of the blueprints
 from views import home, auth
 minerva.register_blueprint(home.mod)
 minerva.register_blueprint(auth.mod, url_prefix='/auth')

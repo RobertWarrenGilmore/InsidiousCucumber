@@ -1,5 +1,4 @@
-"""
-Created on Apr 6, 2015
+""" Created on Apr 6, 2015
 
 @author: chris, Randy
 """

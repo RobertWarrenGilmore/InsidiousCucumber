@@ -1,8 +1,7 @@
-'''
-Created on Apr 6, 2015
+""" Created on Apr 6, 2015
 
 @author: chris
-'''
+"""
 
 from flask import jsonify, current_app
 from flask_restful import Resource, reqparse
@@ -12,12 +11,12 @@ from app.database.models import Course, Project, Team, Student
 
 logger = current_app.config['APP_LOGGER']
 
+
 class UserApi(Resource):
     def get(self):
         if current_user.is_authenticated():
             logger.info("Returning User Info: " + current_user.first_name + " " + current_user.last_name)
 
-            
             return jsonify(first=current_user.first_name,
                            last=current_user.last_name,
                            username=current_user.username,
@@ -25,6 +24,7 @@ class UserApi(Resource):
                            )
         else:
             return jsonify({})
+
 
 class TeamApi(Resource):
     def get(self):
@@ -52,6 +52,7 @@ class TeamApi(Resource):
                            )
         return jsonify({})
 
+
 class CourseApi(Resource):
     def get(self):
         parser = reqparse.RequestParser()
@@ -65,6 +66,7 @@ class CourseApi(Resource):
                            description=courseMap['descr'],
                            projects=courseMap['proj_ids'])
         return jsonify({})
+
 
 class ProjectApi(Resource):
     def get(self):
@@ -81,6 +83,7 @@ class ProjectApi(Resource):
                            num_teams=len(projMap['teams'])
                            )
         return jsonify({})
-        
+
+
 class TeamPrefApi(Resource):
     pass

@@ -35,7 +35,6 @@ class User(CommonEqualityMixin, UserMixin, object):
         self.message_ids = message_ids
         self.password = self.encrypt(password)
 
-
     # TODO: Add Real Encryption for users stored in DB
     def encrypt(self, password):
         # reverse password... its so secret!
@@ -71,7 +70,7 @@ class Student(Document, User):
                        task_ids=doc['task_ids'])
 
 
-class Instructor(User, InstructorMapper):
+class Instructor(User):
     def __init__(self, uid, first_name, last_name, username, password, utype='p', message_ids=[], class_ids=[]):
         super(self.__class__, self).__init__(uid, first_name, last_name, username, password, utype, message_ids)
         self.class_ids = class_ids

@@ -1,16 +1,15 @@
-'''
-Created on Apr 20, 2015
+""" Created on Apr 20, 2015
 
 @author: chris
-'''
+"""
 
 from flask import Blueprint, request, redirect, url_for, jsonify, json
 from flask_login import login_user, logout_user, login_required
 
 from app.database.models.user import Student, Instructor
 
-
 mod = Blueprint('auth', __name__)
+
 
 @mod.route('/login', methods=['POST'])
 def login():
@@ -36,7 +35,7 @@ def login():
 @mod.route('/logout')
 @login_required
 def logout():
-    """Log the user out and update user.last_seen."""
+    """Log the user out"""
     logout_user()
     
     return redirect(url_for('home.index'))

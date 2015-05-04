@@ -1,11 +1,12 @@
-'''
-Created on Jun 19, 2014
+""" Created on Jun 19, 2014
 
 @author: Chris
-'''
+"""
+
 import logging 
 
 from extras import logger
+
 
 class Config(object):
     DEBUG = False
@@ -13,20 +14,23 @@ class Config(object):
     DB_CONNECTION = 'mongodb://minerva-admin:mitigating@dbh62.mongolab.com:27627/minerva'
     DB_NAME = 'minerva'
     SECRET_KEY = 'SomeSuperSecretKeyNoOneShouldBeAbleToGuess'
-        
+
+
 class ProdConfig(Config):
     MODE = "Production"
-    #LOGGER = logger.initLogging('flask')
-    APP_LOGGER = logger.initLogging('prod.log')
-    
+    # LOGGER = logger.initLogging('flask')
+    APP_LOGGER = logger.init_logging('prod.log')
+
+
 class DevConfig(Config):
     DEBUG = True
     MODE = "Development"
-    #LOGGER = logger.initLogging('flask',logging.DEBUG)
-    APP_LOGGER = logger.initLogging('dev.log', logging.DEBUG)
-    
+    # LOGGER = logger.initLogging('flask',logging.DEBUG)
+    APP_LOGGER = logger.init_logging('dev.log', logging.DEBUG)
+
+
 class TestConfig(Config):
     TEST = False
     MODE = "Testing"
-    #LOGGER = logger.initLogging('flask',logging.INFO)
-    APP_LOGGER = logger.initLogging('prod.log')
+    # LOGGER = logger.initLogging('flask',logging.INFO)
+    APP_LOGGER = logger.init_logging('prod.log')

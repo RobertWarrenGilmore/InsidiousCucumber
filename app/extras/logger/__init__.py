@@ -1,13 +1,13 @@
-import sys
 from logging import getLogger, StreamHandler, Formatter, WARNING
 from logging.handlers import RotatingFileHandler
 
 LOG_FILENAME = 'logs/flask.log'
 
-def initLogging(loggerName,loglevel=WARNING):
+
+def init_logging(logger_name, log_level=WARNING):
    
-    my_logger = getLogger(loggerName)
-    my_logger.setLevel(loglevel)
+    my_logger = getLogger(logger_name)
+    my_logger.setLevel(log_level)
     
     my_console_handler = StreamHandler()
     my_file_handler = RotatingFileHandler(LOG_FILENAME, mode='w', maxBytes=1000, backupCount=3)

@@ -5,8 +5,9 @@
 
 from mongoalchemy.document import Document
 from mongoalchemy.fields import StringField, IntField
-from app.database.models.common import CommonEqualityMixin
 from mongoalchemy.fields.fields import BoolField
+
+from app.database.models.common import CommonEqualityMixin
 
 
 class BasicMessage(CommonEqualityMixin, object):
