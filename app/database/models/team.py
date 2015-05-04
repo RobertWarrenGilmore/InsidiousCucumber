@@ -13,10 +13,10 @@ class Team(Document):
 
     tid = IntField()
     name = StringField()
-    user_ids = ListField()
-    message_ids = ListField()
-    assign_ids = ListField()
-    meeting_ids = ListField()
+    user_ids = ListField(IntField())
+    message_ids = ListField(IntField())
+    assign_ids = ListField(IntField())
+    meeting_ids = ListField(IntField())
 
     def __init__(self, tid, name, user_ids, message_ids=[], assign_ids=[], meeting_ids=[]):
         self.tid = tid
@@ -25,12 +25,3 @@ class Team(Document):
         self.message_ids = message_ids
         self.assign_ids = assign_ids
         self.meeting_ids = meeting_ids
-        
-    def add_message(self, tid):
-        pass
-        
-    def add_assignment(self, tid):
-        pass
-        
-    def add_meeting(self, tid):
-        pass

@@ -14,7 +14,7 @@ class Course(Document):
     cid = IntField()
     name = StringField()
     descr = StringField()
-    proj_ids = ListField()
+    proj_ids = ListField(IntField())
     assign_id = IntField()
     instruct_id = IntField()
     

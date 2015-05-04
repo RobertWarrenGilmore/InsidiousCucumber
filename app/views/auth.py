@@ -5,8 +5,10 @@
 
 from flask import Blueprint, request, redirect, url_for, jsonify, json
 from flask_login import login_user, logout_user, login_required
+from mongoalchemy.session import Session
 
 from app.database.models.user import Student, Instructor
+from app.database import db
 
 mod = Blueprint('auth', __name__)
 
@@ -14,22 +16,32 @@ mod = Blueprint('auth', __name__)
 @mod.route('/login', methods=['POST'])
 def login():
     data = json.loads(request.data)
-    stuMap = Student.get({'username': data["username"]})
-    print(stuMap)
-    if stuMap['type'] == 'u':
-        student = Student.parse_doc(stuMap)
-        if student.check_password(data['password']):
+
+    try:
+        session = Session(db)
+        student = session.query(Student).filter_by(Student.username == data["username"] and Student.utype == 'u')
+
+        if student is not None and student.check_password(data['password']):
             login_user(student)
             return jsonify(success=True)
-    
-    instructMap = Instructor.get({'username': data['username']})
-    if stuMap['type'] == 'p':
-        instructor = Instructor.parse_doc(instructMap)
-        if instructor.check_password(data['password']):
-            login_user(instructor)
+
+        instructor = session.query(Instructor)\
+                            .query(Instructor.username == data["username"] and
+                                   Instructor.utype == 'i'
+                                   )
+
+        if instructor is not None and instructor.check_password(data['password']):
+            login_user(student)
             return jsonify(success=True)
-        
-    return jsonify({'success':False})
+
+    except Exception:
+        return jsonify(message="An Exception was Thrown!")
+
+    finally:
+        # session.end()
+        pass
+
+    return jsonify({'success': False})
 
 
 @mod.route('/logout')

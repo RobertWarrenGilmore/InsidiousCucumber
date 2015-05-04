@@ -12,20 +12,21 @@ from app import login
 from app.database.models.common import CommonEqualityMixin
 
 
-class User(CommonEqualityMixin, UserMixin, object):
+class User(Document, CommonEqualityMixin, UserMixin, object):
     """ Base User Class. Inherited by Student and Instructor
     Contains base functionality and fields for both classes
     """
 
     config_collection_name = 'users'
+    config_polymorphic_collection = True
 
     uid = IntField()
     first_name = StringField()
     last_name = StringField()
     username = StringField()
-    type = EnumField()
-    message_ids = ListField()
-    encryptpw = StringField()
+    type = EnumField(StringField(), 'i', 'u')
+    message_ids = ListField(IntField())
+    encrypt_pw = StringField()
 
     def __init__(self, uid, first_name, last_name, username, password, utype, message_ids):
         self.uid = uid
@@ -34,7 +35,11 @@ class User(CommonEqualityMixin, UserMixin, object):
         self.username = username
         self.type = utype
         self.message_ids = message_ids
-        self.encryptpw = self.encrypt(password)
+        self.encrypt_pw = self.encrypt(password)
+
+    @property
+    def full_name(self):
+        return self.first_name + " " + self.last_name
 
     @property
     def password(self):
@@ -42,17 +47,20 @@ class User(CommonEqualityMixin, UserMixin, object):
 
     @password.setter
     def password(self, password):
-        self.encryptpw = generate_password_hash(password)
+        self.encrypt_pw = generate_password_hash(password)
 
     def verify_password(self, password):
-        return check_password_hash(self.encryptpw, password)
+        return check_password_hash(self.encrypt_pw, password)
 
     def get_id(self):
         return self.uid
 
 
-class Student(Document, User):
+class Student(User):
     """Student in the system"""
+
+    team_ids = ListField(IntField())
+    task_ids = ListField(IntField())
 
     def __init__(self, uid, first_name, last_name, username, password, utype='u', message_ids=[], team_ids=[],
                  task_ids=[]):
@@ -74,12 +82,12 @@ class Student(Document, User):
 
 
 class Instructor(User):
+
+    class_ids = ListField(IntField())
+
     def __init__(self, uid, first_name, last_name, username, password, utype='p', message_ids=[], class_ids=[]):
         super(self.__class__, self).__init__(uid, first_name, last_name, username, password, utype, message_ids)
         self.class_ids = class_ids
-
-    def add_class(self, class_id):
-        self.class_id += [class_id]
 
     @staticmethod
     def parse_doc(doc):

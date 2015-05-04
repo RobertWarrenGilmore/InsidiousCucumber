@@ -6,11 +6,13 @@
 from flask import jsonify, current_app
 from flask_restful import Resource, reqparse
 from flask_login import current_user
+from mongoalchemy.session import Session
 
 from app.database.models import Course, Project, Team, Student
+from app.database import db
+
 
 logger = current_app.config['APP_LOGGER']
-
 
 class UserApi(Resource):
     def get(self):
@@ -23,7 +25,7 @@ class UserApi(Resource):
                            type=current_user.type
                            )
         else:
-            return jsonify({})
+            return jsonify(message="User not Logged in")
 
 
 class TeamApi(Resource):
@@ -33,24 +35,31 @@ class TeamApi(Resource):
         args = parser.parse_args()
         
         logger.info(args)
-        
-        teamMap = Team.get({'tid': args['team_id']})
-        if teamMap is not None:
-            member_names = []
-            users = teamMap['user_ids']
-            logger.info(str(users))
-            for x in range(0, len(users)):
-                user_id = users[x]
-                stuMap = Student.get({'uid': user_id})
-                logger.info(stuMap)
-                if stuMap is not None:
-                    full_name = stuMap['first_name'] + ' ' + stuMap['last_name']
-                    member_names.append(full_name)
-            return jsonify(team_id=teamMap['tid'],
-                           name=teamMap['name'],
-                           members=member_names
-                           )
-        return jsonify({})
+        try:
+
+            session = Session(db)
+            team = session.query(Team).filter_by(Team.tid == args['team_id']).first()
+
+            if team is not None:
+                member_names = []
+                users = team.user_ids
+                logger.info(str(users))
+
+                for x in range(0, len(users)):
+                    student = session.query(Student.uid == users[x]).first()
+
+                    if student is not None:
+                        member_names.append(student.full_name)
+
+                return jsonify(team_id=team.tid,
+                               name=team.name,
+                               members=member_names
+                               )
+            return jsonify(message="Team Not Found")
+        except Exception:
+            return jsonify(message=Exception.message)
+        finally:
+            session.end()
 
 
 class CourseApi(Resource):
