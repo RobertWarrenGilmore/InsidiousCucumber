@@ -1,15 +1,23 @@
-'''
+"""
 Created on Apr 6, 2015
 
 @author: chris, Randy
-'''
+"""
 
-from app.database.mappers.teamMapper import TeamMapper
+from mongoalchemy.document import Document
+from mongoalchemy.fields import StringField, IntField, ListField
 
 
-class Team(TeamMapper):
-        
-    def __init__(self,tid,name,user_ids, message_ids=[], assign_ids=[], meeting_ids=[]):
+class Team(Document):
+
+    tid = IntField()
+    name = StringField()
+    user_ids = ListField()
+    message_ids = ListField()
+    assign_ids = ListField()
+    meeting_ids = ListField()
+
+    def __init__(self, tid, name, user_ids, message_ids=[], assign_ids=[], meeting_ids=[]):
         self.tid = tid
         self.name = name
         self.user_ids = user_ids

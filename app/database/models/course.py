@@ -1,13 +1,20 @@
-'''
-Created on Apr 6, 2015
+"""Created on Apr 6, 2015
 
-@author: chris, Randy
-'''
+@author: chris
+"""
 
-from app.database.mappers.courseMapper import CourseMapper
+from mongoalchemy.document import Document
+from mongoalchemy.fields import StringField, IntField, ListField
 
 
-class Course(CourseMapper):
+class Course(Document):
+    
+    cid = IntField()
+    name = StringField()
+    descr = StringField()
+    proj_ids = ListField()
+    assign_id = IntField()
+    instruct_id = IntField()
     
     def __init__(self, cid, name, descr="No Description", proj_ids=[], assign_id=[], instruct_id=None):
         self.cid = cid
