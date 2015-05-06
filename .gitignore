@@ -9,3 +9,6 @@
 
 # Exclude the flask log
 /logs/flask.log
+
+# Exclude Idea files
+.idea/

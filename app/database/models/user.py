@@ -4,11 +4,12 @@
 """
 
 from flask_login import UserMixin
-from mongoalchemy.document import Document
-from mongoalchemy.fields import StringField, IntField, EnumField, ListField
+from mongoengine.document import Document
+from mongoengine.fields import IntField, StringField, ListField
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import login
+from app.extras.fields import EnumField
 from app.database.models.common import CommonEqualityMixin
 
 
@@ -16,9 +17,6 @@ class User(Document, CommonEqualityMixin, UserMixin, object):
     """ Base User Class. Inherited by Student and Instructor
     Contains base functionality and fields for both classes
     """
-
-    config_collection_name = 'users'
-    config_polymorphic_collection = True
 
     uid = IntField()
     first_name = StringField()

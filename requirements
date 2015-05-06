@@ -1,4 +1,4 @@
-mongoalchemy
+mongoengine
 Flask==0.10.1
 Flask-Login==0.2.11
 Flask-RESTful==0.3.2
