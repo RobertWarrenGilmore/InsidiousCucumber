@@ -6,7 +6,7 @@
 from flask_login import UserMixin
 from mongoengine.document import Document
 from mongoengine.fields import IntField, StringField, ListField, SequenceField
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
 
 from app import login
 from app.database.models.common import CommonEqualityMixin
