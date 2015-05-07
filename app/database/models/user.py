@@ -6,13 +6,13 @@
 from flask_login import UserMixin
 from mongoengine.document import Document
 from mongoengine.fields import IntField, StringField, ListField, SequenceField
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
 from app import login
 from app.database.models.common import CommonEqualityMixin
 
 
-class User(Document, CommonEqualityMixin, UserMixin, object):
+class User(Document, CommonEqualityMixin, UserMixin):
     """ Base User Class. Inherited by Student and Instructor
     Contains base functionality and fields for both classes
     """
@@ -20,16 +20,18 @@ class User(Document, CommonEqualityMixin, UserMixin, object):
     meta = {'allow_inheritance': True,
             'collection': 'users'}
 
-    uid = SequenceField(primary_key=True, required=True)
-    first_name = StringField()
-    last_name = StringField()
-    username = StringField()
-    type = StringField(max_length=1, choices=('u', 'i'))
+    uid = SequenceField(primary_key=True, required=True, unique=True)
+    first_name = StringField(required=True)
+    last_name = StringField(required=True)
+    username = StringField(required=True)
+    type = StringField(required=True, max_length=1, choices=('u', 'i'))
     message_ids = ListField(IntField(), default=[])
-    password = StringField()
+    encrypt_pw = StringField(required=True)
 
     def __init__(self, *args, **kwargs):
         Document.__init__(self, *args, **kwargs)
+        if 'uid' in kwargs:
+            self.uid = kwargs['uid']
         if 'first_name' in kwargs:
             self.first_name = kwargs['first_name']
         if 'last_name' in kwargs:
@@ -38,17 +40,15 @@ class User(Document, CommonEqualityMixin, UserMixin, object):
             self.username = kwargs['username']
         if 'message_ids' in kwargs:
             self.message_ids = kwargs['message_ids']
-        if 'password' in kwargs:
-            self.password = kwargs['password']
-
-        self.uid = User.objects.count() + 1
+        if 'encrypt_pw' in kwargs:
+            self.encrypt_pw = kwargs['encrypt_pw']
 
     @property
     def full_name(self):
         return self.first_name + " " + self.last_name
 
     def verify_password(self, password):
-        return check_password_hash(self.password, password)
+        return check_password_hash(self.encrypt_pw, password)
 
     def get_id(self):
         return self.uid
@@ -62,12 +62,20 @@ class Student(User):
 
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
+        if 'type' in kwargs:
+            self.type = kwargs['type']
         if 'team_ids' in kwargs:
             self.team_ids = kwargs['team_ids']
         if 'task_ids' in kwargs:
             self.task_ids = kwargs['task_ids']
 
-        self.type = 'u'
+    @staticmethod
+    def init_student(first_name, last_name, username, password, message_ids):
+        type = 'u'
+        encrypt_pw = generate_password_hash(password)
+        uid = User.objects.count() + 1
+        return Student(uid=uid, type=type, first_name=first_name, last_name=last_name,
+                       username=username, encrypt_pw=encrypt_pw, message_ids=message_ids)
 
 
 class Instructor(User):
@@ -79,7 +87,13 @@ class Instructor(User):
         if 'class_ids' in kwargs:
             self.task_ids = kwargs['class_ids']
 
-        self.type = 'i'
+    @staticmethod
+    def init_instructor(first_name, last_name, username, password, message_ids):
+        uid = User.objects.count() + 1
+        type = 'u'
+        encrypt_pw = generate_password_hash(password)
+        return Instructor(uid=uid, type=type, first_name=first_name, last_name=last_name,
+                          username=username, encrypt_pw=encrypt_pw, message_ids=message_ids)
 
 @login.user_loader
 def load_user(user_id):

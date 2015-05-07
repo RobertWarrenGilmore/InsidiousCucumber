@@ -9,19 +9,32 @@ from mongoengine.fields import StringField, IntField, ListField
 
 class Course(Document):
 
-    config_collection_name = 'classes'
+    meta = {'collection': 'classes'}
 
-    cid = IntField()
-    name = StringField()
-    descr = StringField()
-    proj_ids = ListField(IntField())
-    assign_id = IntField()
-    instruct_id = IntField()
+    cid = IntField(required=True, primary_key=True, unique=True)
+    name = StringField(required=True)
+    descr = StringField(default="No Description")
+    proj_ids = ListField(IntField(), default=[])
+    assign_ids = ListField(IntField(), default=[])
+    instruct_id = IntField(default=None)
     
-    def __init__(self, cid, name, descr="No Description", proj_ids=[], assign_id=[], instruct_id=None):
-        self.cid = cid
-        self.name = name
-        self.descr = descr
-        self.proj_ids = proj_ids
-        self.assign_id = assign_id
-        self.instruct_id = instruct_id
+    def __init__(self, *args, **kwargs):
+        Document.__init__(self, *args, **kwargs)
+
+        if 'cid' in kwargs:
+            self.cid = kwargs['cid']
+        if 'name' in kwargs:
+            self.name = kwargs['name']
+        if 'descr' in kwargs:
+            self.descr = kwargs['descr']
+        if 'proj_ids' in kwargs:
+            self.proj_ids = kwargs['proj_ids']
+        if 'assign_id' in kwargs:
+            self.assign_id = kwargs['assign_id']
+        if 'instruct_id' in kwargs:
+            self.instruct_id = kwargs['instruct_id']
+
+    @staticmethod
+    def init_course(name, descr, proj_ids, assign_ids, instruct_id):
+        cid = Course.objects.count()
+        return Course(cid=cid, name=name, descr=descr, proj_ids=proj_ids, assign_ids=assign_ids, instruct_id=instruct_id)

@@ -1,6 +1,6 @@
 """Created on Apr 6, 2015
 
-@author: chris, Randy
+@author: chris
 """
 
 from mongoengine.document import Document
@@ -9,9 +9,10 @@ from mongoengine.fields import StringField, IntField, BooleanField
 from app.database.models.common import CommonEqualityMixin
 
 
-class BasicMessage(CommonEqualityMixin, object):
+class BasicMessage(Document, CommonEqualityMixin):
 
-    config_collection_name = "messages"
+    meta = {'allow_inheritance': True,
+            'collection': 'messages'}
 
     mid = IntField()
     text = StringField()
@@ -28,7 +29,7 @@ class BasicMessage(CommonEqualityMixin, object):
         self.seen = True
 
 
-class UserMessage(Document, BasicMessage):
+class UserMessage(BasicMessage):
 
     receiver = IntField()
     
@@ -39,7 +40,7 @@ class UserMessage(Document, BasicMessage):
         self.seen = False
 
 
-class TeamMessage(Document, BasicMessage):
+class TeamMessage(BasicMessage):
 
     team = IntField()
     

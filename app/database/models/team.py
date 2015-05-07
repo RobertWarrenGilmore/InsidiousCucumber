@@ -1,6 +1,6 @@
 """ Created on Apr 6, 2015
 
-@author: chris, Randy
+@author: chris
 """
 
 from mongoengine.document import Document
@@ -9,7 +9,7 @@ from mongoengine.fields import StringField, IntField, ListField
 
 class Team(Document):
 
-    config_collection_name = 'teams'
+    meta = {'collection': 'teams'}
 
     tid = IntField()
     name = StringField()
