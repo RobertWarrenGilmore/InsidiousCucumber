@@ -27,45 +27,42 @@ class UserApi(Resource):
         else:
             return jsonify(message="User not Logged in")
 
+    def post(self):
+        pass
+
+    def put(self):
+        pass
+
+    def delete(self):
+        pass
+
 
 class TeamApi(Resource):
-    def get(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('team_id', type=int)
-        args = parser.parse_args()
-        
-        logger.info(args)
-        try:
 
-            team = Team.objects(tid=args['team_id']).first()
+    def get(self, team_id):
 
-            if team is not None:
-                member_names = []
-                users = team.user_ids
-                logger.info(str(users))
+        team = Team.objects(tid=team_id).first()
 
-                for x in range(0, len(users)):
-                    student = Student.objects(uid=users[x]).first()
+        if team is not None:
+            member_names = []
+            users = team.user_ids
+            logger.info(str(users))
+            for x in range(0, len(users)):
+                student = Student.objects(uid=users[x]).first()
+                if student is not None:
+                    member_names.append(student.full_name)
 
-                    if student is not None:
-                        member_names.append(student.full_name)
-
-                return jsonify(team_id=team.tid,
-                               name=team.name,
-                               members=member_names
-                               )
-            return jsonify(message="Team Not Found")
-        except Exception:
-            return jsonify(message=Exception.message)
+            return jsonify(team_id=team.tid,
+                           name=team.name,
+                           members=member_names
+                           )
+        return jsonify(message="Team Not Found")
 
 
 class CourseApi(Resource):
-    def get(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('course_id', type=int)
-        args = parser.parse_args()
+    def get(self, course_id):
         
-        course = Course.objects(cid=args['course_id']).first()
+        course = Course.objects(cid=course_id).first()
         if course is not None:
             return jsonify(course_id=course.cid,
                            name=course.name,
@@ -75,12 +72,9 @@ class CourseApi(Resource):
 
 
 class ProjectApi(Resource):
-    def get(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('project_id', type=int)
-        args = parser.parse_args()
+    def get(self, project_id):
         
-        project = Project.objects(pid=args['project_id'])
+        project = Project.objects(pid=project_id)
         if project is not None:
             return jsonify(project_id=project.pid,
                            name=project.name,
