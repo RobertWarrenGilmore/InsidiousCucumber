@@ -11,8 +11,10 @@ from extras import logger
 class Config(object):
     DEBUG = False
     TESTING = False
-    DB_CONNECTION = 'mongodb://minerva-admin:mitigating@dbh62.mongolab.com:27627/minerva'
-    DB_NAME = 'minerva'
+    MONGODB_SETTINGS = {
+        'db': 'minerva',
+        'host': 'mongodb://minerva-admin:mitigating@dbh62.mongolab.com:27627/minerva'
+    }
     SECRET_KEY = 'SomeSuperSecretKeyNoOneShouldBeAbleToGuess'
 
 
