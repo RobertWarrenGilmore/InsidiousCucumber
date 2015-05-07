@@ -1,6 +1,7 @@
 from flask import Flask, g
 from flask_restful import Api
 from flask_login import LoginManager
+from mongoengine import connect
 
 # create the app
 minerva = Flask(__name__)
@@ -20,7 +21,10 @@ logger.info("Logger created")
 # Push the current application context to allow for current_app to be used
 app_ctx = minerva.app_context()
 app_ctx.push()
-    
+
+# Connect to the database
+connect('minerva', host=minerva.config['DB_CONNECTION'])
+
 # Register all of the blueprints
 from views import home, auth
 minerva.register_blueprint(home.mod)

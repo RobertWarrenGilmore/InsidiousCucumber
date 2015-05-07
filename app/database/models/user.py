@@ -5,11 +5,10 @@
 
 from flask_login import UserMixin
 from mongoengine.document import Document
-from mongoengine.fields import IntField, StringField, ListField
+from mongoengine.fields import IntField, StringField, ListField, SequenceField
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import login
-from app.extras.fields import EnumField
 from app.database.models.common import CommonEqualityMixin
 
 
@@ -18,37 +17,38 @@ class User(Document, CommonEqualityMixin, UserMixin, object):
     Contains base functionality and fields for both classes
     """
 
-    uid = IntField()
+    meta = {'allow_inheritance': True,
+            'collection': 'users'}
+
+    uid = SequenceField(primary_key=True, required=True)
     first_name = StringField()
     last_name = StringField()
     username = StringField()
-    type = EnumField(StringField(), 'i', 'u')
-    message_ids = ListField(IntField())
-    encrypt_pw = StringField()
+    type = StringField(max_length=1, choices=('u', 'i'))
+    message_ids = ListField(IntField(), default=[])
+    password = StringField()
 
-    def __init__(self, uid, first_name, last_name, username, password, utype, message_ids):
-        self.uid = uid
-        self.first_name = first_name
-        self.last_name = last_name
-        self.username = username
-        self.type = utype
-        self.message_ids = message_ids
-        self.encrypt_pw = self.encrypt(password)
+    def __init__(self, *args, **kwargs):
+        Document.__init__(self, *args, **kwargs)
+        if 'first_name' in kwargs:
+            self.first_name = kwargs['first_name']
+        if 'last_name' in kwargs:
+            self.last_name = kwargs['last_name']
+        if 'username' in kwargs:
+            self.username = kwargs['username']
+        if 'message_ids' in kwargs:
+            self.message_ids = kwargs['message_ids']
+        if 'password' in kwargs:
+            self.password = kwargs['password']
+
+        self.uid = User.objects.count() + 1
 
     @property
     def full_name(self):
         return self.first_name + " " + self.last_name
 
-    @property
-    def password(self):
-        raise AttributeError('password is not a readable attribute')
-
-    @password.setter
-    def password(self, password):
-        self.encrypt_pw = generate_password_hash(password)
-
     def verify_password(self, password):
-        return check_password_hash(self.encrypt_pw, password)
+        return check_password_hash(self.password, password)
 
     def get_id(self):
         return self.uid
@@ -57,55 +57,31 @@ class User(Document, CommonEqualityMixin, UserMixin, object):
 class Student(User):
     """Student in the system"""
 
-    team_ids = ListField(IntField())
-    task_ids = ListField(IntField())
+    team_ids = ListField(IntField(), default=[])
+    task_ids = ListField(IntField(), default=[])
 
-    def __init__(self, uid, first_name, last_name, username, password, utype='u', message_ids=[], team_ids=[],
-                 task_ids=[]):
-        super(self.__class__, self).__init__(uid, first_name, last_name, username, password, utype, message_ids)
-        self.team_ids = team_ids
-        self.task_ids = task_ids
+    def __init__(self, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+        if 'team_ids' in kwargs:
+            self.team_ids = kwargs['team_ids']
+        if 'task_ids' in kwargs:
+            self.task_ids = kwargs['task_ids']
 
-    @staticmethod
-    def parse_doc(doc):
-        return Student(uid=doc['uid'],
-                       first_name=doc['first_name'],
-                       last_name=doc['last_name'],
-                       username=doc['username'],
-                       password=doc['password'],
-                       utype=doc['type'],
-                       message_ids=doc['message_ids'],
-                       team_ids=doc['team_ids'],
-                       task_ids=doc['task_ids'])
+        self.type = 'u'
 
 
 class Instructor(User):
 
-    class_ids = ListField(IntField())
+    class_ids = ListField(IntField(), default=[])
 
-    def __init__(self, uid, first_name, last_name, username, password, utype='p', message_ids=[], class_ids=[]):
-        super(self.__class__, self).__init__(uid, first_name, last_name, username, password, utype, message_ids)
-        self.class_ids = class_ids
+    def __init__(self, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+        if 'class_ids' in kwargs:
+            self.task_ids = kwargs['class_ids']
 
-    @staticmethod
-    def parse_doc(doc):
-        return Instructor(uid=doc['uid'],
-                          first_name=doc['first_name'],
-                          last_name=doc['last_name'],
-                          username=doc['username'],
-                          password=doc['password'],
-                          utype=doc['type'],
-                          message_ids=doc['message_ids'],
-                          class_ids=doc['class_ids']
-                          )
-
+        self.type = 'i'
 
 @login.user_loader
 def load_user(user_id):
     """Loader used by the login manager"""
-    if Student.get({'uid': user_id})['type'] == 'u':
-        return Student.parse_doc(Student.get({'uid': user_id}))
-    elif Instructor.get({'uid': user_id})['type'] == 'p':
-        return Instructor.parse_doc(Instructor.get({'uid': user_id}))
-    else:
-        return None
+    return User.objects(uid=user_id).first()

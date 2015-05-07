@@ -3,9 +3,8 @@
 @author: chris, Randy
 """
 
-from mongoalchemy.document import Document
-from mongoalchemy.fields import IntField
-from mongoalchemy.fields.fields import DateTimeField, StringField
+from mongoengine.document import Document
+from mongoengine.fields import IntField, DateTimeField, StringField
 
 
 class Assignment(object):

@@ -3,9 +3,8 @@
 @author: chris, Randy
 """
 
-from mongoalchemy.document import Document
-from mongoalchemy.fields import StringField, IntField
-from mongoalchemy.fields.fields import BoolField
+from mongoengine.document import Document
+from mongoengine.fields import StringField, IntField, BooleanField
 
 from app.database.models.common import CommonEqualityMixin
 
@@ -17,7 +16,7 @@ class BasicMessage(CommonEqualityMixin, object):
     mid = IntField()
     text = StringField()
     sender = IntField()
-    seen = BoolField()
+    seen = BooleanField()
     type = StringField()
     
     def __init__(self, mid, text, sender):
