@@ -33,7 +33,7 @@ minerva.register_blueprint(home.mod)
 minerva.register_blueprint(auth.mod, url_prefix='/auth')
 
 # Register the REST apis
-from app.views.api.gateway import UserApi, CourseApi, TeamApi, ProjectApi 
+from app.views.api import UserApi, CourseApi, TeamApi, ProjectApi
 api.add_resource(UserApi, '/user')
 api.add_resource(CourseApi, '/course/<int:course_id>')
 api.add_resource(TeamApi, '/team/<int:team_id>')
