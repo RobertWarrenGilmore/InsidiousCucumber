@@ -38,6 +38,8 @@ class User(Document, CommonEqualityMixin, UserMixin):
             self.last_name = kwargs['last_name']
         if 'username' in kwargs:
             self.username = kwargs['username']
+        if 'type' in kwargs:
+            self.type = kwargs['type']
         if 'message_ids' in kwargs:
             self.message_ids = kwargs['message_ids']
         if 'encrypt_pw' in kwargs:
@@ -62,8 +64,6 @@ class Student(User):
 
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
-        if 'type' in kwargs:
-            self.type = kwargs['type']
         if 'team_ids' in kwargs:
             self.team_ids = kwargs['team_ids']
         if 'task_ids' in kwargs:

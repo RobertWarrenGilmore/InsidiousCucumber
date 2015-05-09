@@ -36,5 +36,5 @@ class Course(Document):
 
     @staticmethod
     def init_course(name, descr, proj_ids, assign_ids, instruct_id):
-        cid = Course.objects.count()
+        cid = Course.objects.count() + 1
         return Course(cid=cid, name=name, descr=descr, proj_ids=proj_ids, assign_ids=assign_ids, instruct_id=instruct_id)
