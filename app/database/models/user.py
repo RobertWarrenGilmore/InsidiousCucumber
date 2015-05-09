@@ -88,14 +88,14 @@ class Instructor(User):
             self.task_ids = kwargs['class_ids']
 
     @staticmethod
-    def init_instructor(first_name, last_name, username, password, message_ids):
+    def init_instructor(first_name, last_name, username, password):
         uid = User.objects.count() + 1
         type = 'u'
         encrypt_pw = generate_password_hash(password)
         return Instructor(uid=uid, type=type, first_name=first_name, last_name=last_name,
-                          username=username, encrypt_pw=encrypt_pw, message_ids=message_ids)
+                          username=username, encrypt_pw=encrypt_pw)
 
 @login.user_loader
 def load_user(user_id):
     """Loader used by the login manager"""
-    return User.objects(uid=user_id).first()
+    return User.objects(uid=user_id).exclude('encrypt_pw').first()
