@@ -32,7 +32,8 @@ class DevConfig(Config):
 
 
 class TestConfig(Config):
-    TEST = False
+    DEBUG = False
+    TESTING = True
     MODE = "Testing"
     # LOGGER = logger.initLogging('flask',logging.INFO)
-    APP_LOGGER = logger.init_logging('prod.log')
+    APP_LOGGER = logger.init_logging('test.log')

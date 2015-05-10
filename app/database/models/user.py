@@ -8,7 +8,6 @@ from mongoengine.document import Document
 from mongoengine.fields import IntField, StringField, ListField, SequenceField
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from app import login
 from app.database.models.common import CommonEqualityMixin
 
 
@@ -70,12 +69,12 @@ class Student(User):
             self.task_ids = kwargs['task_ids']
 
     @staticmethod
-    def init_student(first_name, last_name, username, password, message_ids):
+    def init_student(first_name, last_name, username, password):
         type = 'u'
         encrypt_pw = generate_password_hash(password)
         uid = User.objects.count() + 1
         return Student(uid=uid, type=type, first_name=first_name, last_name=last_name,
-                       username=username, encrypt_pw=encrypt_pw, message_ids=message_ids)
+                       username=username, encrypt_pw=encrypt_pw)
 
 
 class Instructor(User):
@@ -94,8 +93,3 @@ class Instructor(User):
         encrypt_pw = generate_password_hash(password)
         return Instructor(uid=uid, type=type, first_name=first_name, last_name=last_name,
                           username=username, encrypt_pw=encrypt_pw)
-
-@login.user_loader
-def load_user(user_id):
-    """Loader used by the login manager"""
-    return User.objects(uid=user_id).exclude('encrypt_pw').first()
