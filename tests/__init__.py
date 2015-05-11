@@ -1,10 +1,9 @@
 """ Test imports for Nose Test Runner """
 
-import unittest
+import nose
 
-import test_mappers
-import test_models
-
+import test_auth
+import test_api
 
 if __name__ == '__main__':
-    unittest.main()
+    nose.main()

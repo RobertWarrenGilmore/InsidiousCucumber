@@ -20,7 +20,7 @@ def login():
         login_user(user)
         return jsonify(success=True)
 
-    return jsonify({'success': False})
+    return jsonify({'success': False}), 404
 
 
 @mod.route('/logout')

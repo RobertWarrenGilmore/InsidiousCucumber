@@ -5,11 +5,13 @@
 @author: Chris
 """
 
-from app import minerva
+from app import create_app
 
 from flask_script import Manager, Shell, Server
 
-manager = Manager(minerva)
+app = create_app()
+
+manager = Manager(app)
 
 
 # Used to make variables available to the shell if needed

@@ -27,6 +27,8 @@ class BasicMessage(Document, CommonEqualityMixin):
             self.text = kwargs['text']
         if 'sender' in kwargs:
             self.sender = kwargs['sender']
+        if 'seen' in kwargs:
+            self.seen = kwargs['seen']
 
     def mark_as_seen(self):
         self.seen = True
@@ -41,8 +43,6 @@ class UserMessage(BasicMessage):
 
         if 'receiver_id' in kwargs:
             self.receiver_id = kwargs['receiver_id']
-        if 'seen' in kwargs:
-            self.seen = kwargs['seen']
 
     @staticmethod
     def init_user_message(sender_id, receiver_id, text):
