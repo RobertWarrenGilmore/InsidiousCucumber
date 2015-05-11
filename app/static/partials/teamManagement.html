@@ -17,6 +17,10 @@
 			x-lvl-draggable="true" data-name="{{member}}" data-team="{{team.index}}">
 			{{member}}
 		</div>
+		<div class="panel panel-danger" ng-if="team.members.length == 0" style="padding:5px;background:#EFDEDE"
+			ng-click="teamManagementCtrl.remove(team.index)">
+			Remove Team
+		</div>
 		<div class="panel panel-default" style="padding:5px;text-align:center" x-lvl-drop-target="true"
 			x-on-drop="teamManagementCtrl.dropped(dragEl, dropEl)" data-team="{{team.index}}">
 			+

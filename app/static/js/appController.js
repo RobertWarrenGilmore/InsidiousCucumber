@@ -15,17 +15,39 @@ app.controller('AppController', function ($http) {
 
 	var self = this;
 
-	self.user = {};
+	self.user = {
+		first: "Loading",
+		last: "Loading",
+		username: "lll111",
+		type: "u",
+		courses: []
+	};
 
 	$http.get('/user').
 			success(function(data, status, headers, config) {
-				if (data.first != undefined) {
+				if (data.first != undefined && data.courses != undefined) {
 					self.user = {
 						first: data.first,
 						last: data.last,
 						username: data.username,
 						type: data.type,
-						courses: data.courses,
+						courses: data.courses
+					};
+				} else if (data.first != undefined) {
+					self.user = {
+						first: data.first,
+						last: data.last,
+						username: data.username,
+						type: data.type,
+						courses: []
+					};
+				} else {
+					self.user = {
+						first: "Error",
+						last: "Enoch",
+						username: "eee1111",
+						type: "u",
+						courses: []
 					};
 				}
 			}).
