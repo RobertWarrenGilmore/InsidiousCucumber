@@ -23,7 +23,7 @@ class User(Document, CommonEqualityMixin, UserMixin):
     first_name = StringField(required=True)
     last_name = StringField(required=True)
     username = StringField(required=True)
-    type = StringField(required=True, max_length=1, choices=('u', 'i'))
+    type = StringField(required=True, max_length=1, choices=('u', 'p'))
     message_ids = ListField(IntField(), default=[])
     encrypt_pw = StringField(required=True)
 
@@ -89,7 +89,7 @@ class Instructor(User):
     @staticmethod
     def init_instructor(first_name, last_name, username, password):
         uid = User.objects.count() + 1
-        type = 'i'
+        type = 'p'
         encrypt_pw = generate_password_hash(password)
         return Instructor(uid=uid, type=type, first_name=first_name, last_name=last_name,
                           username=username, encrypt_pw=encrypt_pw)

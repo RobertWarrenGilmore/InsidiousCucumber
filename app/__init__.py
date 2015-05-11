@@ -47,11 +47,12 @@ def create_app(mode='DEV'):
     minerva.register_blueprint(auth.mod, url_prefix='/auth')
 
     # Register the REST apis
-    from app.views.api import UserApi, CourseApi, TeamApi, ProjectApi
+    from app.views.api import UserApi, CourseApi, TeamApi, ProjectApi, CreateProjApi
     api.add_resource(UserApi, '/user')
     api.add_resource(CourseApi, '/course/<int:course_id>')
     api.add_resource(TeamApi, '/team/<int:team_id>')
     api.add_resource(ProjectApi, '/project/<int:project_id>')
+    api.add_resource(CreateProjApi, '/project')
     # api.add_resource(CourseListApi)
     # api.add_resource(TeamListApi)
     # api.add_resource(ProjectListApi)

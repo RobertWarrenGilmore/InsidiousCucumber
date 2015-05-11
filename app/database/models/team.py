@@ -15,7 +15,7 @@ class Team(Document):
     name = StringField(required=True)
     user_ids = ListField(IntField(), default=[])
     message_ids = ListField(IntField(), default=[])
-    assign_ids = ListField(IntField(), default=[])
+    task_ids = ListField(IntField(), default=[])
     meeting_ids = ListField(IntField(), default=[])
 
     def __init__(self, *args, **kwargs):
@@ -29,8 +29,8 @@ class Team(Document):
             self.user_ids = kwargs['user_ids']
         if 'message_ids' in kwargs:
             self.message_ids = kwargs['message_ids']
-        if 'assign_ids' in kwargs:
-            self.assign_ids = kwargs['assign_ids']
+        if 'task_ids' in kwargs:
+            self.task_ids = kwargs['task_ids']
         if 'meeting_ids' in kwargs:
             self.meeting_ids = kwargs['meeting_ids']
 

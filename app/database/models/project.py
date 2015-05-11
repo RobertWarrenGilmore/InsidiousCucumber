@@ -30,6 +30,6 @@ class Project(Document):
             self.deliverable_ids = kwargs['deliverable_ids']
 
     @staticmethod
-    def init_project(name, url, descr, team_ids, deliverable_ids):
+    def init_project(name, url, descr):
         pid = Project.objects.count() + 1
-        return Project(pid=pid, name=name, url=url, descr=descr, team_ids=team_ids, deliverable_ids=deliverable_ids)
+        return Project(pid=pid, name=name, url=url, descr=descr)

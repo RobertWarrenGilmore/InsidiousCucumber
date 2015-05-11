@@ -16,7 +16,7 @@ def get_current_user():
             resp.status = '200'
             return resp
 
-        elif current_user.type == 'i':
+        elif current_user.type == 'p':
             resp = jsonify(success=True, uid=current_user.uid,
                            first=current_user.first_name, last=current_user.last_name,
                            username=current_user.username, type=current_user.type,
@@ -30,15 +30,18 @@ def get_current_user():
         resp.status = '401'
         return resp
 
+
 def put_user(args=None):
     if current_user.is_authenticated():
         try:
             current_user.first_name = args['first']
             current_user.last_name = args['last']
             current_user.save()
-        except Exception:
-            pass
-        return Response(status=201)
+
+            return Response(status=201)
+        except AttributeError:
+            return Response(status=500)
+
     else:
         resp = jsonify(success=False)
         resp.status = '404'
