@@ -1,6 +1,6 @@
 __author__ = 'Chris'
 
-from flask import jsonify, current_app, g
+from flask import jsonify, current_app, g, Response
 from flask_restful import Resource, reqparse
 from flask_login import current_user
 
@@ -13,15 +13,23 @@ class UserApi(Resource):
         if current_user.is_authenticated():
             g.logger.info("Returning User Info: " + current_user.full_name)
 
-            return jsonify(message="Returned User Object")
+            resp = jsonify(success=True, uid=current_user.uid,
+                           first=current_user.first_name, last=current_user.last_name,
+                           username=current_user.username, type=current_user.type,
+                           courses=current_user.team_ids)
+
+            resp.status = '200'
+            return resp
         else:
-            return jsonify(message="User not Authenticated")
+            resp = jsonify(success=False)
+            resp.status = '401'
+            return resp
 
     def post(self):
-        pass
+        return Response(status=405)
 
     def put(self):
         pass
 
     def delete(self):
-        pass
+        return Response(status=405)

@@ -30,7 +30,7 @@ class TestTeamApi(flask_testing.TestCase):
             try:
                 self.assertEqual(response.data.tid,
                                  self.team.tid,
-                                 "The uids do not match!")
+                                 "The uid's do not match!")
             except AttributeError:
                 self.fail("JSON returned did not include tid, which throws an attribute error")
 
@@ -65,22 +65,19 @@ class TestTeamApi(flask_testing.TestCase):
 
             response = c.put(uri)
 
-            # self.assert200(response, "This method did not return a 201: Created ")
-            # Find appropriate way of testing for 201 status code
+            self.assertStatus(response, 201, "This method did not return a 201: Created ")
 
     def test_put_team_404(self):
         with self.client as c:
             response = c.put('/team/1')
 
-            # self.assert201(response, "This method did not return a 201: Created ")
-            # Find appropriate way of testing for 201 status code
+            self.assertStatus(response, 201, "This method did not return a 201: Created ")
 
     def test_delete_team_204(self):
         with self.client:
             response = self.client.delete('/team/1')
 
-            # self.assert204(response, "This method does not return a 204: No Content status code")
-            # Find appropriate way of testing for 204 status code
+            self.assertStatus(response, 204, "This method does not return a 204: No Content status code")
 
 if __name__ == "__main__":
     nose.main()

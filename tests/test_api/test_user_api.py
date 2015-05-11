@@ -3,6 +3,7 @@
 @author: chris
 """
 
+import json
 import nose
 import flask_testing
 
@@ -13,6 +14,8 @@ from app.database.models.user import Student
 
 
 class TestUserApi(flask_testing.TestCase):
+
+    stu = None
 
     def create_app(self):
         return create_app(mode='TEST')
@@ -32,15 +35,18 @@ class TestUserApi(flask_testing.TestCase):
 
             response = c.get('/user')
 
+            data = json.loads(response.data)
+            print(data)
             self.assert200(response, "A status code other than success was return")
-            try:
-                self.assertEqual(response.data.uid,
-                                 self.stu.uid,
-                                 "The uids do not match!")
-            except AttributeError:
-                self.fail("JSON returned did not include uid, which throws an attribute error")
+            self.assertTrue(data['success'])
 
-            self.assertRaises(AttributeError, self.stu.password, "Password should not be visible!")
+            # Test for fields
+            self.assertIn('uid', data, "The uid is not present!")
+            self.assertIn('first', data, "The first is not present!")
+            self.assertIn('last', data, "The last is not present!")
+            self.assertIn('username', data, "The username is not present!")
+            self.assertIn('type', data, "The type is not present!")
+            self.assertIn('courses', data, "The courses are not present!")
 
     def test_get_user_not_auth(self):
         with self.client as c:
@@ -62,8 +68,7 @@ class TestUserApi(flask_testing.TestCase):
 
             response = c.put('/user')
 
-            # self.assert200(response, "This method did not return a 201: Created ")
-            # Find appropriate way of testing for 201 status code
+            self.assertStatus(response, 201,  "This method did not return a 201: Created ")
 
     def test_delete_user(self):
         with self.client as c:
