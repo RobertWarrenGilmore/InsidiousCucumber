@@ -1,7 +1,22 @@
 <h2>{{meetingsCtrl.project.name}} Team Meetings</h2>
 <hr>
-<button class="btn" ng-if="app.user.type=='p'">Add Meeting</button>
-&nbsp;
-<button class="btn" style="float:right">Download</button>
+<span>
+	Description:<input type="text" class="form-control" ng-model="meetingsCtrl.description"/><br>
+</span>
+<span class="col-md-3">
+	Start Date:<input type="date" class="form-control" datepicker-popup ng-model="meetingsCtrl.startdate"/><br>
+</span>
+<span class="col-md-2">
+	Start Time:<input type="number" class="form-control" ng-model="meetingsCtrl.starttime"/><br>
+</span>
+<span class="col-md-3">
+	End Date:<input type="date" class="form-control" datepicker-popup ng-model="meetingsCtrl.enddate"/><br>
+</span>
+<span class="col-md-2">
+	End Time:<input type="number" class="form-control" ng-model="meetingsCtrl.endtime"/><br>
+</span>
+<span class="col-md-2">
+	<br><button class="btn" ng-click="meetingsCtrl.add()">Add Meeting</button>
+</span><br><br><br>
 <hr>
 <div ui-calendar ng-model="meetingsCtrl.project.meetings"></div>

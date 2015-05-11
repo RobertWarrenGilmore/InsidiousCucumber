@@ -7,7 +7,7 @@
 
 var app = angular.module('minerva');
 
-app.controller('MeetingsController', function ($http, $routeParams) {
+app.controller('MeetingsController', function($http, $routeParams) {
 	console.log('Started MeetingsController');
 
 	var self = this;
@@ -16,7 +16,16 @@ app.controller('MeetingsController', function ($http, $routeParams) {
 	self.projects = [{
 		'id': '1',
 		'name': 'Main Project',
-		'meetings': []
+		'meetings': [{events: [{
+			title:"Weekly Meeting 1",
+			start:"2015-05-13T13:00:00+00:00",
+			end:"2015-05-13T14:00:00+00:00"
+		},
+		{
+			title:"Weekly Meeting 2",
+			start:"2015-05-20T13:00:00+00:00",
+			end:"2015-05-20T14:00:00+00:00"
+		}]}]
 	}, {
 		'id': '2',
 		'name': 'Research Project',
@@ -33,5 +42,16 @@ app.controller('MeetingsController', function ($http, $routeParams) {
 		if (self.projects[i].id === $routeParams.id) {
 			self.project = self.projects[i];
 		}
+	}
+
+	self.add = function() {
+		var start = new Date(Date.parse(self.startdate + " " + self.starttime));
+		var end = new Date(Date.parse(self.enddate + " " + self.endtime));
+		self.project.meetings[0].events.push({
+			title: self.description,
+			start: start.toISOString(),
+			end: end.toISOString()
+		});
+		console.log(self.project.meetings);
 	}
 });
