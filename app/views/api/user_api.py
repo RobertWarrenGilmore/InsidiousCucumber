@@ -6,7 +6,6 @@ from flask_login import current_user
 
 def get_current_user():
     if current_user.is_authenticated():
-
         if current_user.type == 'u':
             resp = jsonify(success=True, uid=current_user.uid,
                            first=current_user.first_name, last=current_user.last_name,
