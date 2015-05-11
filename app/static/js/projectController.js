@@ -75,6 +75,11 @@ app.controller('ProjectController', function ($http, metarService, $routeParams,
 		$location.path('/tasks');
 	};
 
+	self.gotoMeetings = function () {
+		$location.search('id', self.project.id);
+		$location.path('/meetings');
+	};
+
 	self.gotoTeamManagement = function () {
 		$location.search('id', self.project.id);
 		$location.path('/teamManagement');

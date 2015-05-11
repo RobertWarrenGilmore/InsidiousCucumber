@@ -35,7 +35,7 @@
 	<button class="btn btn-lg" style="margin-bottom:5px" ng-click="projectCtrl.gotoDeliverables()" ng-if="app.user.type=='p'">Manage Deliverables</button>
 	<button class="btn btn-lg" style="margin-bottom:5px" ng-click="projectCtrl.gotoTeamPreferenceSurvey()" ng-if="app.user.type!='p'">Specify Team Preferences</button>
 	<button class="btn btn-lg" style="margin-bottom:5px" ng-click="projectCtrl.gotoTasks()" ng-if="app.user.type!='p'">Manage Tasks</button>
-	<button class="btn btn-lg" style="margin-bottom:5px" ng-if="app.user.type!='p'">Schedule Meetings</button>
+	<button class="btn btn-lg" style="margin-bottom:5px" ng-click="projectCtrl.gotoMeetings()" ng-if="app.user.type!='p'">Manage Meetings</button>
 	<button class="btn btn-lg" style="margin-bottom:5px" ng-click="projectCtrl.gotoMessages()" ng-if="app.user.type!='p'">Message Team</button>
 	<button class="btn btn-lg" style="margin-bottom:5px" ng-click="projectCtrl.gotoDeliverables()" ng-if="app.user.type!='p'">View Deliverables</button>
 </div>

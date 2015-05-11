@@ -29,6 +29,10 @@ app.config(function ($routeProvider) {
 		templateUrl: 'static/partials/messages.html',
 		controller: 'MessagesController',
 		controllerAs: 'messagesCtrl'
+	}).when('/meetings', {
+		templateUrl: 'static/partials/meetings.html',
+		controller: 'MeetingsController',
+		controllerAs: 'meetingsCtrl'
 	}).when('/tasks', {
 		templateUrl: 'static/partials/tasks.html',
 		controller: 'TasksController',

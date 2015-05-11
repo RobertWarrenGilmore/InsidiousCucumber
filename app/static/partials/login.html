@@ -1,11 +1,21 @@
-<div class="well text-center">
-	<h2>User Login</h2>
-	<p>Username: <input ng-model="loginCtrl.username" type="text"/></p>
-	<p>Password: <input ng-model="loginCtrl.password" type="password"
-		ng-keyup="$event.keyCode == 13 ? loginCtrl.checkUser() : null"/></p>
-	<button class="btn" ng-click="loginCtrl.checkUser()">Submit</button>
-	<br>
-	<div ng-if="loginCtrl.invalidPass" class="alert">
-  		<strong>Error</strong> Invalid username or password.  Please try again later.
-	</div>
+<div class="well">
+	<h2 class="text-center">User Login</h2>
+	<p class="col-md-12">
+		<span class="col-md-1">Username: </span>
+		<input class="col-md-11" ng-model="loginCtrl.username" type="text"/>
+	</p>
+	<p class="col-md-12">
+		<span class="col-md-1">Password: </span>
+		<input class="col-md-11" ng-model="loginCtrl.password" type="password"
+		ng-keyup="$event.keyCode == 13 ? loginCtrl.checkUser() : null"/>
+	</p>
+	<p class="col-md-12 text-center"><button class="btn" ng-click="loginCtrl.checkUser()">Log In</button></p>
+	<br><br>
+	<p class="text-center">Need assistance? Please contact the ITS Service Desk at 585-475-HELP [4357] or servicedesk@rit.edu.</p>
+</div>
+<div ng-if="loginCtrl.invalidPass" class="alert alert-danger">
+  	<strong>Error</strong> Invalid username or password.  Please try again later.
+</div>
+<div ng-if="loginCtrl.error" class="alert alert-danger">
+  	<strong>Error</strong> Something went wrong with the web service.  Please try again later.
 </div>

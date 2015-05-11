@@ -30,17 +30,33 @@ app.controller('LoginController', function ($scope, $http, $location) {
 	self.getUser = function() {
 		$http.get('/user').
 			success(function(data, status, headers, config) {
-				if (data.first != undefined) {
+				if (data.first != undefined && data.courses != undefined) {
 					$scope.app.user = {
 						first: data.first,
 						last: data.last,
 						username: data.username,
 						type: data.type,
-						courses: data.courses,
+						courses: data.courses
+					};
+				} else if (data.first != undefined) {
+					$scope.app.user = {
+						first: data.first,
+						last: data.last,
+						username: data.username,
+						type: data.type,
+						courses: []
+					};
+				} else {
+					$scope.app.user = {
+						first: "Error",
+						last: "Enoch",
+						username: "eee1111",
+						type: "u",
+						courses: []
 					};
 				}
-			}).
-			error(function(data, status, headers, config) {
+			}).error(function(data, status, headers, config) {
+				self.error = true;
 			});
-	}
+	};
 });

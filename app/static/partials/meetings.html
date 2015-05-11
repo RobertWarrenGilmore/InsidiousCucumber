@@ -1,0 +1,7 @@
+<h2>{{meetingsCtrl.project.name}} Team Meetings</h2>
+<hr>
+<button class="btn" ng-if="app.user.type=='p'">Add Meeting</button>
+&nbsp;
+<button class="btn" style="float:right">Download</button>
+<hr>
+<div ui-calendar ng-model="meetingsCtrl.project.meetings"></div>

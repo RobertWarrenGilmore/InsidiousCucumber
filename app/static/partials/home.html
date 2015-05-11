@@ -3,6 +3,9 @@
 	Below you will find cards representing the projects for each of your classes. Selecting a card will bring you to a page allowing you to interact with that project.
 </p>
 <br>
+<div ng-if="homeCtrl.error" class="alert alert-danger">
+  	<strong>Error</strong> Something went wrong with the web service.  Please try again later.
+</div>
 <!-- Display Courses -->
 <div id="courses" ng-repeat="course in homeCtrl.courses">
 	<div class="container">
