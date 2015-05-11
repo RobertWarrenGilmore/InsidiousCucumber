@@ -43,6 +43,10 @@ app.controller('TeamManagementController', function ($scope, $http, $routeParams
 		});
 	};
 
+	self.remove = function(index) {
+		self.teams.splice(index, 1);
+	};
+
 	self.cancel = function() {
 		self.teams = angular.copy(self.oldteams);
 

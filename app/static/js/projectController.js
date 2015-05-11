@@ -7,7 +7,7 @@
 
 var app = angular.module('minerva');
 
-app.controller('ProjectController', function ($http, metarService, $routeParams, $location) {
+app.controller('ProjectController', function ($http, $routeParams, $location) {
 	console.log('Started ProjectController');
 
 	var self = this;
@@ -54,34 +54,46 @@ app.controller('ProjectController', function ($http, metarService, $routeParams,
 
 	self.project = {};
 
-	for (var i = 0; i < self.projects.length; i++) {
-		if (self.projects[i].id === $routeParams.id) {
-			self.project = self.projects[i];
-		}
+	self.init = function() {
+		$http.get('/project/' + $routeParams.id).
+			success(function(data, status, headers, config) {
+				self.project = data;
+			}).error(function(data, status, headers, config) {
+				self.error = true;
+			});
+	};
+
+	self.updateProject = function() {
+		$http.put('/project/' + self.project.project_id, self.project).
+			success(function(data, status, headers, config) {
+				projectCtrl.edit = false;
+			}).error(function(data, status, headers, config) {
+				self.error = true;
+			});
 	}
 
 	self.gotoDeliverables = function () {
-		$location.search('id', self.project.id);
+		$location.search('id', self.project.project_id);
 		$location.path('/deliverables');
 	};
 
 	self.gotoMessages = function () {
-		$location.search('id', self.project.id);
+		$location.search('id', self.project.project_id);
 		$location.path('/messages');
 	};
 
 	self.gotoTasks = function () {
-		$location.search('id', self.project.id);
+		$location.search('id', self.project.project_id);
 		$location.path('/tasks');
 	};
 
 	self.gotoMeetings = function () {
-		$location.search('id', self.project.id);
+		$location.search('id', self.project.project_id);
 		$location.path('/meetings');
 	};
 
 	self.gotoTeamManagement = function () {
-		$location.search('id', self.project.id);
+		$location.search('id', self.project.project_id);
 		$location.path('/teamManagement');
 	};
 
@@ -89,36 +101,5 @@ app.controller('ProjectController', function ($http, metarService, $routeParams,
 		$location.path('/teamPreferenceSurvey');
 	};
 
-	var promise = null;
-
-	self.abortRequest = function () {
-		return (promise && promise.abort());
-	};
-
-	function logData() {
-		console.log(promise);
-	}
-
-	self.makeSearch = function () {
-		self.search(self.query);
-	};
-
-	self.search = function (station) {
-		self.loaded = false;
-		self.metar = {};
-		console.log('Got Station data for: ' + station);
-		promise = metarService.getMetar(station);
-		promise.then(
-			function (metarData) {
-				console.log(metarData);
-				self.metar = metarData.data;
-				self.loaded = true;
-			},
-			function (errorMessage) {
-				self.loaded = true;
-				console.warn('Request for Metar was rejected');
-				console.warn('Error: ', errorMessage);
-			});
-		logData();
-	};
+	self.init();
 });
