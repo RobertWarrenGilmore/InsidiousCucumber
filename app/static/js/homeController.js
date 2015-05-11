@@ -47,27 +47,28 @@ app.controller('HomeController', function ($scope, $http, $location) {
 	self.init = function() {
 		var usercourses = $scope.app.user.courses;
 		
-
-		for (var i = 0; i < usercourses.length; i++) {
-			$http.get('/course/' + usercourses[i]).
-				success(function(data, status, headers, config) {
-					var temp = {};
-					temp.course_id = data.course_id;
-					temp.name = data.name;
-					temp.description = data.description;
-					temp.projects = [];
-					self.courses.push(temp);
-					for (var j = 0; j < data.projects.length; j++) {
-						$http.get('/project/' + data.projects[i]).
-							success(function(data, status, headers, config) {
-								self.courses[i].projects.push(data);
-							}).error(function(data, status, headers, config) {
-								self.error = true;
-							});
-					}
-				}).error(function(data, status, headers, config) {
-					self.error = true;
-				});
+		if (usercourses != undefined) {
+			for (var i = 0; i < usercourses.length; i++) {
+				$http.get('/course/' + usercourses[i]).
+					success(function(data, status, headers, config) {
+						var temp = {};
+						temp.course_id = data.course_id;
+						temp.name = data.name;
+						temp.description = data.description;
+						temp.projects = [];
+						self.courses.push(temp);
+						for (var j = 0; j < data.projects.length; j++) {
+							$http.get('/project/' + data.projects[i]).
+								success(function(data, status, headers, config) {
+									self.courses[i].projects.push(data);
+								}).error(function(data, status, headers, config) {
+									self.error = true;
+								});
+						}
+					}).error(function(data, status, headers, config) {
+						self.error = true;
+					});
+			}
 		}
 	};
 

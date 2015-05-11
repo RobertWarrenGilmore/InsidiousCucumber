@@ -10,18 +10,12 @@
 var app = angular.module('minerva', ['ngRoute', 'ui.bootstrap', 'ui.calendar', 'lvl.directives.dragdrop']);
 
 /*GLOBAL CONTROLLER*/
-app.controller('AppController', function ($http) {
+app.controller('AppController', function ($http, $scope) {
 	console.log('Creating App Controller');
 
 	var self = this;
 
-	self.user = {
-		first: "Loading",
-		last: "Loading",
-		username: "lll111",
-		type: "u",
-		courses: []
-	};
+	self.user = {};
 
 	$http.get('/user').
 			success(function(data, status, headers, config) {
@@ -33,6 +27,9 @@ app.controller('AppController', function ($http) {
 						type: data.type,
 						courses: data.courses
 					};
+					if ($scope.homeCtrl != undefined) {
+						$scope.homeCtrl.init();
+					}
 				} else if (data.first != undefined) {
 					self.user = {
 						first: data.first,
@@ -41,6 +38,9 @@ app.controller('AppController', function ($http) {
 						type: data.type,
 						courses: []
 					};
+					if ($scope.homeCtrl != undefined) {
+						$scope.homeCtrl.init();
+					}
 				} else {
 					self.user = {
 						first: "Error",
@@ -49,9 +49,11 @@ app.controller('AppController', function ($http) {
 						type: "u",
 						courses: []
 					};
+					if ($scope.homeCtrl != undefined) {
+						$scope.homeCtrl.init();
+					}
 				}
-			}).
-			error(function(data, status, headers, config) {
+			}).error(function(data, status, headers, config) {
 				
-		});
+			});
 });
