@@ -14,7 +14,7 @@ class Project(Document):
     deliverable_ids = ListField(IntField(), default=[])
 
     def __init__(self, *args, **kwargs):
-        Document.__init__(*args, **kwargs)
+        Document.__init__(self, *args, **kwargs)
 
         if 'pid' in kwargs:
             self.pid = kwargs['pid']
