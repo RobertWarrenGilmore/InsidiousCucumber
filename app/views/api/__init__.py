@@ -5,32 +5,11 @@
 
 from flask import jsonify, current_app
 from flask_restful import Resource, reqparse
-from flask_login import current_user
 
 from app.database.models import Course, Project, Team, Student
-
+from user_api import UserApi
 
 logger = current_app.config['APP_LOGGER']
-
-
-class UserApi(Resource):
-
-    def get(self):
-        if current_user.is_authenticated():
-            logger.info("Returning User Info: " + current_user.full_name)
-
-            return jsonify(current_user)
-        else:
-            return jsonify(message="User not Logged in")
-
-    def post(self):
-        pass
-
-    def put(self):
-        pass
-
-    def delete(self):
-        pass
 
 
 class TeamApi(Resource):
@@ -54,13 +33,13 @@ class TeamApi(Resource):
                            )
         return jsonify(message="Team Not Found")
 
-    def post(self):
+    def post(self, team_id):
         pass
 
-    def put(self):
+    def put(self, team_id):
         pass
 
-    def delete(self):
+    def delete(self, team_id):
         pass
 
 

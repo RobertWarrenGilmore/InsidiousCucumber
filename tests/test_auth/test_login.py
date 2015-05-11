@@ -12,6 +12,8 @@ from app.database.models.user import Student
 
 class TestLogin(flask_testing.TestCase):
 
+    stu = None
+
     def create_app(self):
         return create_app(mode='TEST')
 
@@ -25,10 +27,8 @@ class TestLogin(flask_testing.TestCase):
     def test_login_success(self):
         with self.client:
             response = self.client.post('/auth/login',
-                                        data=json.dumps({
-                                                         'username': 'test_user',
-                                                         'password': 'test_password'
-                                                         }),
+                                        data=json.dumps({'username': 'test_user',
+                                                         'password': 'test_password'}),
                                         content_type='application/json'
                                         )
             self.assert_200(response)
@@ -37,10 +37,8 @@ class TestLogin(flask_testing.TestCase):
     def test_login_fail(self):
         with self.client:
             response = self.client.post('/auth/login',
-                                        data=json.dumps({
-                                                         'username': 'test_user',
-                                                         'password': 'test_invalid_password'
-                                                         }),
+                                        data=json.dumps({'username': 'test_user',
+                                                         'password': 'test_invalid_password'}),
                                         content_type='application/json'
                                         )
             self.assert_404(response)

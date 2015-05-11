@@ -12,6 +12,8 @@ from app.database.models.user import Student
 
 class TestLogout(flask_testing.TestCase):
 
+    stu = None
+
     def create_app(self):
         return create_app(mode='TEST')
 

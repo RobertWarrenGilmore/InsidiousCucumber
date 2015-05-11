@@ -19,7 +19,7 @@ class Team(Document):
     meeting_ids = ListField(IntField(), default=[])
 
     def __init__(self, *args, **kwargs):
-        Document.__init__(*args, **kwargs)
+        Document.__init__(self, *args, **kwargs)
 
         if 'tid' in kwargs:
             self.tid = kwargs['tid']
