@@ -19,7 +19,7 @@ class Assignment(Document):
     description = StringField()
 
     def __init__(self, *args, **kwargs):
-        Document.__init__(*args, **kwargs)
+        Document.__init__(self, *args, **kwargs)
 
         if 'aid' in kwargs:
             self.aid = kwargs['aid']

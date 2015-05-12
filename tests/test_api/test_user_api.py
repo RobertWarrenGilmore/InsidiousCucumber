@@ -27,7 +27,8 @@ class TestUserApi(flask_testing.TestCase):
         self.inst.save()
 
     def tearDown(self):
-        Student.objects(username='test_user').first().delete()
+        self.stu.delete()
+        self.inst.delete()
 
     def test_get_user_auth(self):
         with self.client as c:

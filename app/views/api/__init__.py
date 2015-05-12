@@ -14,7 +14,6 @@ from course_api import get_course, make_course
 
 
 class UserApi(Resource):
-
     def get(self):
         return get_current_user()
 
@@ -33,7 +32,6 @@ class UserApi(Resource):
 
 
 class TeamApi(Resource):
-
     def get(self, team_id):
         return get_team(team_id)
 
@@ -64,80 +62,97 @@ class TeamApi(Resource):
 
 
 class CourseApi(Resource):
-	def get(self, course_id):
-		course = Course.objects(cid=course_id).first()
-		if course is not None:
-			return jsonify(course_id=course.cid,name=course.name,description=course.descr,projects=course.proj_ids)
-		return jsonify({})
+    def get(self, course_id):
+        course = Course.objects(cid=course_id).first()
+        if course is not None:
+            return jsonify(course_id=course.cid, name=course.name, description=course.descr, projects=course.proj_ids)
+        return jsonify({})
 
-	def post(self):
-		pass
+    def post(self):
+        pass
 
-	def put(self):
-		pass
+    def put(self):
+        pass
 
-	def delete(self):
-		pass
-		
+    def delete(self):
+        pass
+
+
 class CreateCourseApi(Resource):
-	def get(self):
-		return Response(status=405)
-	
-	def post(self):
-		parser = reqparse.RequestParser()
-		parser.add_argument('name', type=str)
-		parser.add_argument('desc', type=str)
-		parser.add_argument('instructor', type=int)
-		args = parser.parse_args()
-		
-		return make_course(args)
-	
-	def put(self):
-		return Response(status=405)
-	
-	def delete(self):
-		return Response(status=405)
+    def get(self):
+        return Response(status=405)
+
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('name', type=str)
+        parser.add_argument('desc', type=str)
+        parser.add_argument('instructor', type=int)
+        args = parser.parse_args()
+
+        return make_course(args)
+
+    def put(self):
+        return Response(status=405)
+
+    def delete(self):
+        return Response(status=405)
+
+
+def delete(self):
+    pass
+
 
 class CreateProjApi(Resource):
-	def post(self):
-		parser = reqparse.RequestParser()
-		parser.add_argument('name', type=str)
-		parser.add_argument('url', type=str)
-		parser.add_argument('desc', type=str)
-		args = parser.parse_args()
-		
-		return make_project(args)
-		
-	def get(self, project_id):
-		pass
-	
-	def put(self):
-		pass
-	
-	def delete(self):
-		pass
-		
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('name', type=str)
+        parser.add_argument('url', type=str)
+        parser.add_argument('desc', type=str)
+        args = parser.parse_args()
+
+        return make_project(args)
+
+    def get(self, project_id):
+        pass
+
+    def put(self):
+        pass
+
+    def delete(self):
+        pass
+
+
 class ProjectApi(Resource):
     def get(self, project_id):
-		return get_project(project_id)
+        return get_project(project_id)
 
     def post(self):
         return Response(status=405)
 
     def put(self, project_id):
-		parser = reqparse.RequestParser()
-		parser.add_argument('name', type=str)
-		parser.add_argument('url', type=str)
-		parser.add_argument('description', type=str)
-		parser.add_argument('team_ids', type=list)
-		parser.add_argument('deliverable_ids', type=list)
-		args = parser.parse_args()
-		
-		return update_project(project_id,args)
+        parser = reqparse.RequestParser()
+        parser.add_argument('name', type=str)
+        parser.add_argument('url', type=str)
+        parser.add_argument('description', type=str)
+        parser.add_argument('team_ids', type=list)
+        parser.add_argument('deliverable_ids', type=list)
+        args = parser.parse_args()
+
+        return update_project(project_id, args)
 
     def delete(self, project_id):
         return delete_project(project_id)
 
 
-class TeamPrefApi(Resource):
-    pass
+class MessageApi(Resource):
+    def get(self, message_id):
+        pass
+
+    def post(self, message_id):
+        return Response(status=405)
+
+    def put(self, message_id):
+        return Response(status=405)
+
+    def delete(self, message_id):
+        pass
