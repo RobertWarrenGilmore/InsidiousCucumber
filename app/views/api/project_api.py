@@ -14,6 +14,6 @@ def get_project(id):
 	return jsonify({})
 	
 def make_project(args):
-	project = Project.init_project(args['name'],args['url'],args['desc'],[],[])
+	project = Project.init_project(args['name'],args['url'],args['desc'])
 	project.save()
 	return Response(status=201)

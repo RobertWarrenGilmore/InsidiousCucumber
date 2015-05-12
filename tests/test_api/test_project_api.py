@@ -16,7 +16,7 @@ class TestUserApi(flask_testing.TestCase):
 		return create_app(mode='TEST')
 		
 	def setUp(self):
-		self.proj = Project.init_project("Test Proj", "http://example.com", "Test description", [1,2], [])
+		self.proj = Project.init_project("Test Proj", "http://example.com", "Test description")
 		self.proj.save()
 
 	def tearDown(self):
