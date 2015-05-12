@@ -1,8 +1,48 @@
 <h2>{{tasksCtrl.project.name}} Tasks</h2>
 <hr>
-<button class="btn" ng-if="app.user.type=='p'">Add Task</button>
-&nbsp;
+<div ng-if="tasksCtrl.selectuser" class="alert alert-danger">
+  	<strong>Error</strong> You must select a user to add a task.  Please select on from the below list.
+</div>
+<span>
+	Description:<input type="text" class="form-control" ng-model="tasksCtrl.description"/><br>
+</span>
+<div class="col-md-3 alert" ng-class="member.selected" ng-repeat="member in tasksCtrl.team.members" 
+	ng-click="tasksCtrl.selectMember(member)">
+	<p>{{member.name}}</p>
+</div><br><br><br><br>
+<span>
+	Due Date:<input type="date" class="form-control" datepicker-popup ng-model="tasksCtrl.duedate"/><br>
+</span>
+<span>
+	Due Time:<input type="number" class="form-control" ng-model="tasksCtrl.duetime"/><br>
+</span>
+<span>
+	<button class="btn" ng-click="tasksCtrl.add()">Add Task</button>
+</span>
 <hr>
-<div>
-
+<div ng-repeat="task in tasksCtrl.team.tasks | orderBy:'due'">
+	<div ng-if="tasksCtrl.compareDate(task.due, 0)" class="alert alert-info">
+		<span class="col-md-5">{{task.description}}</span>
+		<span class="col-md-3">Assigned: <b>{{task.assigned}}</b></span>
+		<span class="col-md-3"><b>{{tasksCtrl.parse(task.due)}}</b></span>
+		<span class="col-md-1">
+			<button class="btn" style="margin-top:-7px" ng-click="tasksCtrl.remove($index)">Remove</button>
+		</span><br>
+	</div>
+	<div ng-if="tasksCtrl.compareDate(task.due, 1)" class="alert alert-danger">
+		<span class="col-md-5">{{task.description}}</span>
+		<span class="col-md-3">Assigned: <b>{{task.assigned}}</b></span>
+		<span class="col-md-3"><b>{{tasksCtrl.parse(task.due)}}</b></span>
+		<span class="col-md-1">
+			<button class="btn" style="margin-top:-7px" ng-click="tasksCtrl.remove($index)">Remove</button>
+		</span><br>
+	</div>
+	<div ng-if="tasksCtrl.compareDate(task.due, 2)" class="alert alert-warning">
+		<span class="col-md-5">{{task.description}}</span>
+		<span class="col-md-3">Assigned: <b>{{task.assigned}}</b></span>
+		<span class="col-md-3"><b>{{tasksCtrl.parse(task.due)}}</b></span>
+		<span class="col-md-1">
+			<button class="btn" style="margin-top:-7px" ng-click="tasksCtrl.remove($index)">Remove</button>
+		</span><br>
+	</div>
 </div>
