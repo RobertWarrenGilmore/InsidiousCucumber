@@ -8,6 +8,7 @@ from flask_restful import Resource, reqparse
 
 from app.database.models import Course, Project, Team, Student
 from user_api import get_current_user, put_user
+from project_api import get_project
 
 
 class UserApi(Resource):
@@ -82,16 +83,7 @@ class CourseApi(Resource):
 
 class ProjectApi(Resource):
     def get(self, project_id):
-
-        project = Project.objects(pid=project_id)
-        if project is not None:
-            return jsonify(project_id=project.pid,
-                           name=project.name,
-                           description=project.descr,
-                           url=project.url,
-                           num_teams=len(project.teams)
-                           )
-        return jsonify({})
+		return get_project(project_id)
 
     def post(self):
         pass
