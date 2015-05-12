@@ -3,14 +3,31 @@
 @author: chris
 """
 
-from flask import jsonify, current_app
+from flask import jsonify, current_app, Response
 from flask_restful import Resource, reqparse
 
 from app.database.models import Course, Project, Team, Student
-from user_api import UserApi
+from user_api import get_current_user, put_user
 
-logger = current_app.config['APP_LOGGER']
 
+class UserApi(Resource):
+
+    def get(self):
+        return get_current_user()
+
+    def post(self):
+        return Response(status=405)
+
+    def put(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('first', type=str)
+        parser.add_argument('last', type=str)
+        args = parser.args
+
+        return put_user(args)
+
+    def delete(self):
+        return Response(status=405)
 
 class TeamApi(Resource):
 
@@ -21,7 +38,6 @@ class TeamApi(Resource):
         if team is not None:
             member_names = []
             users = team.user_ids
-            logger.info(str(users))
             for x in range(0, len(users)):
                 student = Student.objects(uid=users[x]).exclude('encrypt_pw').first()
                 if student is not None:

@@ -12,7 +12,7 @@ from app.database.models.common import CommonEqualityMixin
 
 
 class User(Document, CommonEqualityMixin, UserMixin):
-    """ Base User Class. Inherited by Student and Instructor
+    """Base User Class. Inherited by Student and Instructor
     Contains base functionality and fields for both classes
     """
 

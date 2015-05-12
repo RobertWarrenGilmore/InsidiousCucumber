@@ -66,7 +66,7 @@ class TestUserApi(flask_testing.TestCase):
                 sess['user_id'] = self.stu.uid
                 sess['_fresh'] = True
 
-            response = c.put('/user')
+            response = c.put('/user', data={'first': 'test_user_1', 'last': self.stu.last_name})
 
             self.assertStatus(response, 201,  "This method did not return a 201: Created ")
 

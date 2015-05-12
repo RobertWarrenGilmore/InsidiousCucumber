@@ -11,7 +11,7 @@ class Project(Document):
     descr = StringField(default="No Description")
     url = StringField(default="")
     team_ids = ListField(IntField(), default=[])
-    deliverables = ListField(IntField(), default=[])
+    deliverable_ids = ListField(IntField(), default=[])
 
     def __init__(self, *args, **kwargs):
         Document.__init__(*args, **kwargs)
@@ -26,10 +26,10 @@ class Project(Document):
             self.url = kwargs['url']
         if 'team_ids' in kwargs:
             self.team_ids = kwargs['team_ids']
-        if 'deliverables' in kwargs:
-            self.deliverables = kwargs['deliverables']
+        if 'deliverable_ids' in kwargs:
+            self.deliverable_ids = kwargs['deliverable_ids']
 
     @staticmethod
-    def init_project(name, url, descr, team_ids, deliverables):
+    def init_project(name, url, descr, team_ids, deliverable_ids):
         pid = Project.objects.count() + 1
-        return Project(pid=pid, name=name, url=url, descr=descr, team_ids=team_ids, deliverables=deliverables)
+        return Project(pid=pid, name=name, url=url, descr=descr, team_ids=team_ids, deliverable_ids=deliverable_ids)
