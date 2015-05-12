@@ -29,3 +29,10 @@ def update_project(id,args):
 		project.save()
 		return Response(status=201)
 	return Response(status=404)
+	
+def delete_project(id):
+	project = Project.objects(pid=id).first()
+	if project is not None:
+		project.delete()
+		return Response(status=201)
+	return Response(status=404)

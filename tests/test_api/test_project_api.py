@@ -20,7 +20,7 @@ class TestUserApi(flask_testing.TestCase):
 		self.proj.save()
 
 	def tearDown(self):
-		Project.objects(pid=self.proj.pid).first().delete()
+		return Project.objects(pid=self.proj.pid).first() is None
 		
 	def test_get_project(self):
 		with self.client as c:
@@ -52,6 +52,11 @@ class TestUserApi(flask_testing.TestCase):
 			data['team_ids'] = [1,2,3]
 			data['deliverable_ids'] = [1,2,3,4]
 			response = c.put('/project/'+str(self.proj.pid),data=data)
+		self.assertStatus(response,201,"Incorrect status code")
+		
+	def test_delete_project(self):
+		with self.client as c:
+			response = c.delete('/project/'+str(self.proj.pid))
 		self.assertStatus(response,201,"Incorrect status code")
 		
 if __name__ == "__main__":
