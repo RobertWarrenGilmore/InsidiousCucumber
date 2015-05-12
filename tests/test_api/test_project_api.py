@@ -20,7 +20,7 @@ class TestUserApi(flask_testing.TestCase):
 		self.proj.save()
 
 	def tearDown(self):
-		return Project.objects(pid=self.proj.pid).first() is None
+		pass
 		
 	def test_get_project(self):
 		with self.client as c:
