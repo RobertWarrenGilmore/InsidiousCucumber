@@ -1,8 +1,38 @@
 <h2>{{deliverablesCtrl.project.name}} Deliverables</h2>
 <hr>
-<button class="btn" ng-if="app.user.type=='p'">Add Deliverable</button>
-<button class="btn" ng-if="app.user.type=='p'">Toggle Projects</button>
-&nbsp;
-<button class="btn" style="float:right">Download</button>
-<hr>
-<div ui-calendar ng-model="deliverablesCtrl.project.deliverables"></div>
+<span ng-if="app.user.type == 'p'">
+	Description:<input type="text" class="form-control" ng-model="deliverablesCtrl.description"/><br>
+</span>
+<span ng-if="app.user.type == 'p'">
+	Due Date:<input type="date" class="form-control" datepicker-popup ng-model="deliverablesCtrl.duedate"/><br>
+</span>
+<span ng-if="app.user.type == 'p'">
+	Due Time:<input type="number" class="form-control" ng-model="deliverablesCtrl.duetime"/><br>
+</span>
+<span ng-if="app.user.type == 'p'">
+	<button class="btn" ng-click="deliverablesCtrl.add()">Add Deliverable</button>
+</span>
+<hr ng-if="app.user.type == 'p'">
+<div ng-repeat="deliverable in deliverablesCtrl.project.deliverables | orderBy:'due'">
+	<div ng-if="deliverablesCtrl.compareDate(deliverable.due, 0)" class="alert alert-info">
+		<span class="col-md-7">{{deliverable.description}}</span>
+		<span class="col-md-4"><b>{{deliverablesCtrl.parse(deliverable.due)}}</b></span>
+		<span class="col-md-1" ng-if="app.user.type == 'p'">
+			<button class="btn" style="margin-top:-7px" ng-click="deliverablesCtrl.remove($index)">Remove</button>
+		</span><br>
+	</div>
+	<div ng-if="deliverablesCtrl.compareDate(deliverable.due, 1)" class="alert alert-danger">
+		<span class="col-md-7">{{deliverable.description}}</span>
+		<span class="col-md-4"><b>{{deliverablesCtrl.parse(deliverable.due)}}</b></span>
+		<span class="col-md-1" ng-if="app.user.type == 'p'">
+			<button class="btn" style="margin-top:-7px" ng-click="deliverablesCtrl.remove($index)">Remove</button>
+		</span><br>
+	</div>
+	<div ng-if="deliverablesCtrl.compareDate(deliverable.due, 2)" class="alert alert-warning">
+		<span class="col-md-7">{{deliverable.description}}</span>
+		<span class="col-md-4"><b>{{deliverablesCtrl.parse(deliverable.due)}}</b></span>
+		<span class="col-md-1" ng-if="app.user.type == 'p'">
+			<button class="btn" style="margin-top:-7px" ng-click="deliverablesCtrl.remove($index)">Remove</button>
+		</span><br>
+	</div>
+</div>
