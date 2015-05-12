@@ -58,6 +58,7 @@ app.controller('ProjectController', function ($http, $routeParams, $location) {
 		$http.get('/project/' + $routeParams.id).
 			success(function(data, status, headers, config) {
 				self.project = data;
+				console.log(data);
 			}).error(function(data, status, headers, config) {
 				self.error = true;
 			});
@@ -66,7 +67,7 @@ app.controller('ProjectController', function ($http, $routeParams, $location) {
 	self.updateProject = function() {
 		$http.put('/project/' + self.project.project_id, self.project).
 			success(function(data, status, headers, config) {
-				projectCtrl.edit = false;
+				self.edit = false;
 			}).error(function(data, status, headers, config) {
 				self.error = true;
 			});

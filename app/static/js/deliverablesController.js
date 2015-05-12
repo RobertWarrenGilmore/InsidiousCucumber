@@ -14,15 +14,15 @@ app.controller('DeliverablesController', function ($http, $routeParams) {
 	self.loaded = false;
 
 	self.projects = [{
-		'id': '1',
+		'id': 1,
 		'name': 'Main Project',
 		'deliverables': [{description:"Release 1", due:"2015-05-10T13:00:00+00:00"}]
 	}, {
-		'id': '2',
+		'id': 2,
 		'name': 'Research Project',
 		'deliverables': [{description:"Release 1", due:"2015-04-20T13:00:00+00:00"}]
 	}, {
-		'id': '3',
+		'id': 3,
 		'name': 'PM Project',
 		'deliverables': [{description:"Release 1", due:"2015-04-20T13:00:00+00:00"}]
 	}];
@@ -30,7 +30,7 @@ app.controller('DeliverablesController', function ($http, $routeParams) {
 	self.project = {};
 
 	for (var i = 0; i < self.projects.length; i++) {
-		if (self.projects[i].id === $routeParams.id) {
+		if (self.projects[i].id == $routeParams.id) {
 			self.project = self.projects[i];
 		}
 	}
