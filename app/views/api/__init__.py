@@ -8,7 +8,7 @@ from flask_restful import Resource, reqparse
 
 from app.database.models import Course, Project, Team, Student
 from user_api import get_current_user, put_user
-from project_api import get_project
+from project_api import get_project, make_project
 
 
 class UserApi(Resource):
@@ -80,13 +80,31 @@ class CourseApi(Resource):
     def delete(self):
         pass
 
-
+class CreateProjApi(Resource):
+	def post(self):
+		parser = reqparse.RequestParser()
+		parser.add_argument('name', type=str)
+		parser.add_argument('url', type=str)
+		parser.add_argument('desc', type=str)
+		args = parser.parse_args()
+		
+		return make_project(args)
+		
+	def get(self, project_id):
+		pass
+	
+	def put(self):
+		pass
+	
+	def delete(self):
+		pass
+		
 class ProjectApi(Resource):
     def get(self, project_id):
 		return get_project(project_id)
 
     def post(self):
-        pass
+        return Response(status=405)
 
     def put(self):
         pass
