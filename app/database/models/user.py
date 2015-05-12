@@ -84,12 +84,12 @@ class Instructor(User):
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
         if 'class_ids' in kwargs:
-            self.task_ids = kwargs['class_ids']
+            self.class_ids = kwargs['class_ids']
 
     @staticmethod
     def init_instructor(first_name, last_name, username, password):
         uid = User.objects.count() + 1
-        type = 'u'
+        type = 'i'
         encrypt_pw = generate_password_hash(password)
         return Instructor(uid=uid, type=type, first_name=first_name, last_name=last_name,
                           username=username, encrypt_pw=encrypt_pw)

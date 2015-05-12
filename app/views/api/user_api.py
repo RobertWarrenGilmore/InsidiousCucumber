@@ -1,10 +1,7 @@
 __author__ = 'Chris'
 
 from flask import jsonify, current_app, g, Response
-from flask_restful import Resource, reqparse
 from flask_login import current_user
-
-from app.database.models.user import Student, Instructor
 
 
 def get_current_user():
