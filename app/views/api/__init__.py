@@ -8,6 +8,7 @@ from flask_restful import Resource, reqparse
 
 from app.database.models import Course, Project, Team, Student
 from user_api import get_current_user, put_user
+from team_api import get_team, delete_team
 from project_api import get_project, make_project
 
 
@@ -23,16 +24,17 @@ class UserApi(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('first', type=str)
         parser.add_argument('last', type=str)
-        args = parser.args
-
+        args = parser.parse_args()
         return put_user(args)
 
     def delete(self):
         return Response(status=405)
 
+
 class TeamApi(Resource):
 
     def get(self, team_id):
+        return get_team(team_id)
 
         team = Team.objects(tid=team_id).first()
 
@@ -51,13 +53,13 @@ class TeamApi(Resource):
         return jsonify(message="Team Not Found")
 
     def post(self, team_id):
-        pass
+        return Response(status=405)
 
     def put(self, team_id):
         pass
 
     def delete(self, team_id):
-        pass
+        return delete_team(team_id)
 
 
 class CourseApi(Resource):
